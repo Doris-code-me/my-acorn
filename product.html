@@ -84,6 +84,59 @@
             </div>
         </section>
     </main>
+    <style>
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    z-index: 1000;
+}
+
+.bottom-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.bottom-nav a i {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+/* Extra padding so page content isn’t hidden behind nav */
+body {
+    padding-bottom: 60px;
+}
+
+/* Make nav smaller on very small screens */
+@media (max-width: 400px) {
+    .bottom-nav a {
+        font-size: 10px;
+    }
+    .bottom-nav a i {
+        font-size: 16px;
+    }
+}
+
+/* Hide bottom nav on larger screens (tablet/desktop) */
+@media (min-width: 769px) {
+    .bottom-nav {
+        display: none;
+    }
+}
+
+        </style>
+
 
 
         <!-- Bottom Navigation -->
@@ -97,6 +150,7 @@
 </body>
 
 </html>
+
 
 
 
