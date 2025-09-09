@@ -288,6 +288,78 @@
         body {
             padding-bottom: 40px;
         }
+        /* Bottom Navigation Bar */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    z-index: 1000;
+}
+
+.bottom-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.bottom-nav a i {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+/* Ensure body doesn't hide behind nav */
+body {
+    padding-bottom: 60px; /* extra space so content isn’t hidden */
+}
+        .events {
+    margin: 20px;
+}
+
+.event-card {
+    background: rgba(255,255,255,0.9);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.event-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.event-info {
+    padding: 12px;
+    color: #333;
+}
+        @media (max-width: 400px) {
+  .bottom-nav a {
+    font-size: 10px;
+  }
+  .bottom-nav a i {
+    font-size: 16px;
+  }
+}
+
+/* Show bottom nav only on small screens */
+@media (min-width: 769px) {
+  .bottom-nav {
+    display: none;
+  }
+}
+
+
     </style>
 </head>
 <body>
@@ -332,12 +404,48 @@
                 <a href="./ycheckin.html">
                     <i class="fas fa-calendar-check"></i>Check-in
                 </a>
-                <a href="./home.html">
+                <a href="./index.html">
                     <i class="fas fa-sign-in-alt"></i>Login
                 </a>
             </div>
         </div>
     </div>
+
+    <div class="events container">
+  <h2 style="color:white; margin:20px 0;">Events</h2>
+  
+  <div class="event-card">
+    <img src="https://via.placeholder.com/400x200" alt="Event" class="event-img">
+    <div class="event-info">
+      <p><strong>Sample Event 1</strong></p>
+      <p>Period: 300 Days</p>
+      <p>Daily: ₦600</p>
+      <p>Total: ₦180,000</p>
+    </div>
+  </div>
+  
+  <div class="event-card">
+    <img src="https://via.placeholder.com/400x200" alt="Event" class="event-img">
+    <div class="event-info">
+      <p><strong>Sample Event 2</strong></p>
+      <p>Period: 300 Days</p>
+      <p>Daily: ₦1050</p>
+      <p>Total: ₦315,000</p>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <a href="./home.html"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="./product.html"><i class="fas fa-cube"></i><span>Product</span></a>
+  <a href="./team.html"><i class="fas fa-users"></i><span>Team</span></a>
+  <a href="./umine.html"><i class="fas fa-user"></i><span>Mine</span></a>
+</nav>
+
 </body>
+    
 
 </html>
+
