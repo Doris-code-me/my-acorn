@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investment Confirmation</title>
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    /* Empty State Styles */
+    .empty-state {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      padding-bottom: 80px;
+    }
+
+    .empty-content {
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .empty-icon i {
+      font-size: 40px;
+      color: #fff;
+    }
+
+    .empty-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 15px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .empty-description {
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    .demo-btn {
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      color: #333;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .demo-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Confirmation Content Styles */
+    .confirmation-content {
+      display: none;
+    }
+
+    .confirmation-content.active {
+      display: block;
+    }
+
+    /* Header */
+    .confirmation-header {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 20px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .header-icon {
+      font-size: 32px;
+      color: #4CAF50;
+    }
+
+    .header-text h1 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .header-text p {
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0;
+      font-size: 14px;
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 20px;
+    }
+
+    /* Cards */
+    .card {
+      background: linear-gradient(145deg, #ffffff, #f0f0f3);
+      border-radius: 20px;
+      margin-bottom: 20px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    /* Summary Grid */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .summary-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .summary-icon {
+      font-size: 20px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .summary-info p:first-child {
+      font-size: 12px;
+      color: #666;
+      margin: 0;
+    }
+
+    .summary-info p:last-child {
+      font-weight: 600;
+      color: #333;
+      margin: 0;
+    }
+
+    /* Investment Plans */
+    .plans-header {
+      padding: 20px;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .plan-item {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .plan-item:last-child {
+      border-bottom: none;
+    }
+
+    .plan-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .plan-details {
+      flex: 1;
+    }
+
+    .plan-name {
+      font-weight: 600;
+      color: #333;
+      margin: 0 0 5px 0;
+    }
+
+    .plan-status {
+      color: #666;
+      font-size: 12px;
+      margin: 0 0 8px 0;
+    }
+
+    .plan-status .status-active {
+      color: #4CAF50;
+      font-weight: 600;
+    }
+
+    .plan-amounts {
+      display: flex;
+      gap: 15px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    /* Total Summary */
+    .total-summary {
+      padding: 20px;
+      background: rgba(102, 126, 234, 0.1);
+      border-top: 1px solid rgba(0,0,0,0.1);
+      border-radius: 0 0 20px 20px;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .total-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .total-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .total-amount {
+      font-size: 20px;
+      font-weight: bold;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .daily-label {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .daily-amount {
+      font-size: 16px;
+      font-weight: 600;
+      color: #4CAF50;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .clear-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 15px;
+      border-radius: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .clear-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .action-btn {
+      border: none;
+      padding: 15px;
+      border-radius: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .dashboard-btn {
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      color: #333;
+    }
+
+    .plans-btn {
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      color: #333;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, #ffffff, #f8f9fa);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    .bottom-nav a {
+      text-align: center;
+      text-decoration: none;
+      color: #666;
+      font-size: 13px;
+      transition: all 0.3s ease;
+      padding: 5px;
+      border-radius: 8px;
+    }
+
+    .bottom-nav i {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .bottom-nav a.active {
+      color: #667eea;
+      font-weight: bold;
+    }
+
+    .bottom-nav a:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .button-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .plan-amounts {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .total-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Empty State -->
+  <div id="emptyState" class="empty-state">
+    <div class="empty-content">
+      <div class="empty-icon">
+        <i class="fa-solid fa-chart-line"></i>
+      </div>
+      <h2 class="empty-title">No Investments Yet</h2>
+      <p class="empty-description">
+        You haven't purchased any investment plans yet. When you join an Acorn plan, it will appear here with your daily returns.
+      </p>
+      <button class="demo-btn" onclick="toggleDemo()">
+        Demo with Sample Plans
+      </button>
+    </div>
+  </div>
+
+  <!-- Confirmation Content -->
+  <div id="confirmationContent" class="confirmation-content">
+    <!-- Header -->
+    <div class="confirmation-header">
+      <div class="header-content">
+        <i class="fa-solid fa-circle-check header-icon"></i>
+        <div class="header-text">
+          <h1>Investment Confirmed!</h1>
+          <p>Your Acorn plans are now active</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <!-- Investment Summary -->
+      <div class="card">
+        <h2 class="card-title">Investment Summary</h2>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <i class="fa-solid fa-box summary-icon"></i>
+            <div class="summary-info">
+              <p>Order Number</p>
+              <p id="orderNumber">INV-2024-001234</p>
+            </div>
+          </div>
+          <div class="summary-item">
+            <i class="fa-solid fa-calendar summary-icon"></i>
+            <div class="summary-info">
+              <p>Purchase Date</p>
+              <p id="purchaseDate"></p>
+            </div>
+          </div>
+          <div class="summary-item">
+            <i class="fa-solid fa-chart-line summary-icon"></i>
+            <div class="summary-info">
+              <p>Daily Returns</p>
+              <p id="dailyReturns">₦3,250</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Investment Plans -->
+      <div class="card">
+        <div class="plans-header">
+          <h2 class="card-title">Your Investment Plans</h2>
+        </div>
+        
+        <div id="plansList">
+          <!-- Plans will be dynamically inserted here -->
+        </div>
+        
+        <!-- Total Summary -->
+        <div class="total-summary">
+          <div class="total-row">
+            <span class="total-label">Total Investment</span>
+            <span class="total-amount" id="totalInvestment">₦13,000</span>
+          </div>
+          <div class="total-row">
+            <span class="daily-label">Expected Daily Returns</span>
+            <span class="daily-amount" id="expectedReturns">₦3,250</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="clear-btn" onclick="toggleDemo()">
+          Clear Demo (Show Empty State)
+        </button>
+        <div class="button-grid">
+          <button class="action-btn dashboard-btn">View Dashboard</button>
+          <button class="action-btn plans-btn">More Plans</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="#" class="active"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="#"><i class="fa-solid fa-box"></i>Products</a>
+    <a href="#"><i class="fa-solid fa-users"></i>Team</a>
+    <a href="#"><i class="fa-solid fa-user"></i>Profile</a>
+  </div>
+
+  <script>
+    // Sample data - in real app, this would come from your backend
+    let purchasedPlans = [];
+    
+    const samplePurchasedPlans = [
+      {
+        id: 1,
+        name: "Acorn 3",
+        investmentAmount: 10000,
+        dailyIncome: 2500,
+        purchaseDate: new Date().toLocaleDateString(),
+        status: "Active",
+        planNumber: "3"
+      },
+      {
+        id: 2,
+        name: "Acorn 1",
+        investmentAmount: 3000,
+        dailyIncome: 750,
+        purchaseDate: new Date().toLocaleDateString(),
+        status: "Active",
+        planNumber: "1"
+      }
+    ];
+
+    // Currency formatting function
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('en-NG', {
+        style: 'currency',
+        currency: 'NGN',
+        minimumFractionDigits: 0
+      }).format(amount);
+    }
+
+    // Toggle between empty state and confirmation content
+    function toggleDemo() {
+      const emptyState = document.getElementById('emptyState');
+      const confirmationContent = document.getElementById('confirmationContent');
+      
+      if (purchasedPlans.length === 0) {
+        // Show confirmation content
+        purchasedPlans = [...samplePurchasedPlans];
+        loadConfirmationData();
+        emptyState.classList.add('hidden');
+        confirmationContent.classList.add('active');
+      } else {
+        // Show empty state
+        purchasedPlans = [];
+        emptyState.classList.remove('hidden');
+        confirmationContent.classList.remove('active');
+      }
+    }
+
+    // Load confirmation data
+    function loadConfirmationData() {
+      // Update purchase date
+      document.getElementById('purchaseDate').textContent = new Date().toLocaleDateString();
+      
+      // Calculate totals
+      let totalInvestment = 0;
+      let totalDailyReturns = 0;
+      
+      purchasedPlans.forEach(plan => {
+        totalInvestment += plan.investmentAmount;
+        totalDailyReturns += plan.dailyIncome;
+      });
+      
+      // Update summary
+      document.getElementById('dailyReturns').textContent = formatCurrency(totalDailyReturns);
+      document.getElementById('totalInvestment').textContent = formatCurrency(totalInvestment);
+      document.getElementById('expectedReturns').textContent = formatCurrency(totalDailyReturns);
+      
+      // Load plans list
+      loadPlansList();
+    }
+
+    // Load plans list
+    function loadPlansList() {
+      const plansList = document.getElementById('plansList');
+      plansList.innerHTML = '';
+      
+      purchasedPlans.forEach((plan, index) => {
+        const planHTML = `
+          <div class="plan-item">
+            <div class="plan-icon">${plan.planNumber}</div>
+            <div class="plan-details">
+              <h3 class="plan-name">${plan.name}</h3>
+              <p class="plan-status">Status: <span class="status-active">${plan.status}</span></p>
+              <div class="plan-amounts">
+                <span><strong>Invested:</strong> ${formatCurrency(plan.investmentAmount)}</span>
+                <span><strong>Daily Income:</strong> ${formatCurrency(plan.dailyIncome)}</span>
+              </div>
+            </div>
+          </div>
+        `;
+        plansList.innerHTML += planHTML;
+      });
+    }
+
+    // Function to be called from your main investment page
+    function showPurchaseConfirmation(planData) {
+      // This function would be called when a user completes a purchase
+      // planData would contain the investment plan details
+      
+      purchasedPlans = Array.isArray(planData) ? planData : [planData];
+      loadConfirmationData();
+      
+      document.getElementById('emptyState').classList.add('hidden');
+      document.getElementById('confirmationContent').classList.add('active');
+    }
+
+    // Check if there's purchase data in localStorage (from your main page)
+    window.addEventListener('load', function() {
+      const storedPurchases = localStorage.getItem('recentPurchases');
+      if (storedPurchases) {
+        try {
+          const parsedPurchases = JSON.parse(storedPurchases);
+          if (parsedPurchases && parsedPurchases.length > 0) {
+            showPurchaseConfirmation(parsedPurchases);
+            // Clear the stored data after showing
+            localStorage.removeItem('recentPurchases');
+          }
+        } catch (e) {
+          console.error('Error parsing stored purchases:', e);
+        }
+      }
+    });
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set initial state
+      if (purchasedPlans.length === 0) {
+        document.getElementById('emptyState').classList.remove('hidden');
+        document.getElementById('confirmationContent').classList.remove('active');
+      }
+    });
+  </script>
+
+</body>
+</html>
+
