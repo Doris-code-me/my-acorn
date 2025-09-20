@@ -16,8 +16,104 @@
       font-family: Arial, sans-serif;
     }
 
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #ffffff, #f8f9fa);
+      margin: 50% auto;
+      padding: 25px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      transform: translateY(-50%);
+      text-align: center;
+    }
+
+    .modal h3 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    .modal p {
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .modal-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .confirm-btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+
+    .cancel-btn {
+      background: #f0f0f0;
+      color: #666;
+    }
+
+    .modal-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    /* Success/Error Messages */
+    .message {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 600;
+      z-index: 1001;
+      transform: translateX(400px);
+      transition: all 0.3s ease;
+    }
+
+    .message.show {
+      transform: translateX(0);
+    }
+
+    .message.success {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+    }
+
+    .message.error {
+      background: linear-gradient(135deg, #f44336, #da190b);
+    }
+
+
+
     body {
-      background: #f9f9f9;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
       padding-bottom: 80px; /* space for bottom nav */
     }
 
@@ -30,6 +126,8 @@
       margin-bottom: 15px;
       font-size: 20px;
       font-weight: bold;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
     .quick-grid {
@@ -39,24 +137,41 @@
     }
 
     .quick-card {
-      background: #fff;
-      border-radius: 10px;
+      background: linear-gradient(145deg, #ffffff, #f0f0f3);
+      border-radius: 15px;
       padding: 20px;
       text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.3s ease;
+      color: #333;
+      font-weight: 500;
     }
 
     .quick-card:hover {
-      transform: scale(1.05);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(31, 38, 135, 0.4);
     }
 
     .quick-card i {
-      font-size: 22px;
-      margin-bottom: 8px;
+      font-size: 28px;
+      margin-bottom: 12px;
       display: block;
-      color: #4b6cb7;
+      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.3s ease;
+    }
+
+    .quick-card:hover i {
+      transform: scale(1.2) rotate(5deg);
+      background: linear-gradient(135deg, #f093fb, #f5576c, #4facfe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     /* Investment Plans */
@@ -65,44 +180,60 @@
     }
 
     .plan-card {
-      background: linear-gradient(to right, #4b6cb7, #182848);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
       color: #fff;
-      border-radius: 12px;
+      border-radius: 20px;
       margin-bottom: 20px;
       padding: 20px;
       position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
     }
 
     .plan-card h3 {
       margin-bottom: 10px;
+      font-size: 18px;
+      font-weight: 600;
     }
 
     .plan-details {
       display: flex;
       justify-content: space-between;
       margin-top: 10px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 8px;
-      padding: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 15px;
       font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .join-btn {
       position: absolute;
       right: 20px;
       top: 20px;
-      background: #fff;
-      color: #182848;
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      color: #333;
       border: none;
-      padding: 8px 15px;
-      border-radius: 20px;
-      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 600;
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      font-size: 13px;
     }
 
     .join-btn:hover {
-      background: #f0f0f0;
+      background: linear-gradient(135deg, #fcb69f 0%, #ffecd2 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
 
     /* Bottom Navigation */
@@ -111,29 +242,49 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      background: #fff;
+      background: linear-gradient(135deg, #ffffff, #f8f9fa);
       display: flex;
       justify-content: space-around;
-      padding: 10px 0;
-      border-top: 1px solid #ddd;
+      padding: 12px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
     }
 
     .bottom-nav a {
       text-align: center;
       text-decoration: none;
-      color: #333;
+      color: #666;
       font-size: 13px;
+      transition: all 0.3s ease;
+      padding: 5px;
+      border-radius: 8px;
     }
 
     .bottom-nav i {
       display: block;
       font-size: 20px;
       margin-bottom: 3px;
+      transition: all 0.3s ease;
     }
 
     .bottom-nav a.active {
-      color: #ff6600;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       font-weight: bold;
+    }
+
+    .bottom-nav a.active i {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .bottom-nav a:hover {
+      transform: translateY(-2px);
     }
 
     /* Responsive Design */
@@ -150,12 +301,13 @@
       .plan-details {
         flex-direction: column;
         text-align: left;
-        gap: 5px;
+        gap: 8px;
+        padding: 12px;
       }
 
       .join-btn {
-        padding: 6px 12px;
-        font-size: 13px;
+        padding: 8px 16px;
+        font-size: 12px;
       }
 
       .bottom-nav a {
@@ -175,11 +327,11 @@
     <h2>Quick Access</h2>
     <div class="quick-grid">
       <div class="quick-card">
-        <i class="fa-solid fa-wallet"></i>
+        <i class="fa-solid fa-credit-card"></i>
         Recharge
       </div>
       <div class="quick-card">
-        <i class="fa-solid fa-money-bill-transfer"></i>
+        <i class="fa-solid fa-hand-holding-dollar"></i>
         Withdraw
       </div>
       <div class="quick-card">
@@ -187,7 +339,7 @@
         Gift Code
       </div>
       <div class="quick-card">
-        <i class="fa-solid fa-user"></i>
+        <i class="fa-solid fa-user-circle"></i>
         Profile
       </div>
     </div>
@@ -197,34 +349,94 @@
   <div class="plans">
     <div class="plan-card">
       <h3>Acorn 1</h3>
-      <button class="join-btn">Join Now</button>
+      <button class="join-btn" onclick="purchasePlan('Acorn 1', 3000, 750)">Join Now</button>
       <div class="plan-details">
-        <div><strong>Duration:</strong><br>40 Days</div>
-        <div><strong>Daily Profit:</strong><br>₦850</div>
-        <div><strong>Price:</strong><br>₦3000</div>
+        <div><strong>Invest:</strong><br>3k get daily</div>
+        <div><strong>Income:</strong><br>₦750</div>
       </div>
     </div>
 
     <div class="plan-card">
       <h3>Acorn 2</h3>
-      <button class="join-btn">Join Now</button>
+      <button class="join-btn" onclick="purchasePlan('Acorn 2', 6000, 1500)">Join Now</button>
       <div class="plan-details">
-        <div><strong>Duration:</strong><br>40 Days</div>
-        <div><strong>Daily Profit:</strong><br>₦1500</div>
-        <div><strong>Price:</strong><br>₦5000</div>
+        <div><strong>Invest:</strong><br>6k Get daily</div>
+        <div><strong>Income:</strong><br>₦1500</div>
       </div>
     </div>
 
     <div class="plan-card">
       <h3>Acorn 3</h3>
-      <button class="join-btn">Join Now</button>
+      <button class="join-btn" onclick="purchasePlan('Acorn 3', 10000, 2500)">Join Now</button>
       <div class="plan-details">
-        <div><strong>Duration:</strong><br>40 Days</div>
-        <div><strong>Daily Profit:</strong><br>₦2000</div>
-        <div><strong>Price:</strong><br>₦7000</div>
+        <div><strong>Invest:</strong><br>10k Get daily</div>
+        <div><strong>Income:</strong><br>₦2500</div>
+      </div>
+    </div>
+       <div class="plan-card">
+      <h3>Acorn 4</h3>
+      <button class="join-btn" onclick="purchasePlan('Acorn 4', 20000, 5000)">Join Now</button>
+      <div class="plan-details">
+        <div><strong>Invest:</strong><br>20k Get daily</div>
+        <div><strong>Income:</strong><br>₦5000</div>
+      </div>
+    </div>
+       <div class="plan-card">
+      <h3>Acorn 5</h3>
+      <button class="join-btn" onclick="purchasePlan('Acorn 5', 30000, 7500)">Join Now</button>
+      <div class="plan-details">
+        <div><strong>Invest:</strong><br>30k Get daily</div>
+        <div><strong>Income:</strong><br>₦7500</div>
+      </div>
+    </div>
+       <div class="plan-card">
+      <h3>Acorn 6</h3>
+      <button class="join-btn" onclick="purchasePlan('Acorn 6', 70000, 17500)">Join Now</button>
+      <div class="plan-details">
+        <div><strong>Invest:</strong><br>70k Get daily</div>
+        <div><strong>Income:</strong><br>₦17500</div>
+      </div>
+    </div>
+       <div class="plan-card">
+      <h3>Acorn 7</h3>
+      <button class="join-btn" onclick="purchasePlan('Acorn 7', 100000, 25000)">Join Now</button>
+      <div class="plan-details">
+        <div><strong>Invest:</strong><br>100k Get daily</div>
+        <div><strong>Income:</strong><br>₦25000</div>
+      </div>
+    </div> 
+         <div class="plan-card">
+      <h3>Acorn 8</h3>
+      <button class="join-btn" onclick="purchasePlan('Acorn 8', 200000, 50000)">Join Now</button>
+      <div class="plan-details">
+        <div><strong>Invest:</strong><br>200k Get daily</div>
+        <div><strong>Income:</strong><br>₦50000</div>
+      </div>
+    </div>
+        <div class="plan-card">
+      <h3>Acorn 9</h3>
+      <button class="join-btn" onclick="purchasePlan('Acorn 9', 300000, 75000)">Join Now</button>
+      <div class="plan-details">
+        <div><strong>Invest:</strong><br>300k Get daily</div>
+        <div><strong>Income:</strong><br>₦75000</div>
       </div>
     </div>
   </div>
+
+  <!-- Confirmation Modal -->
+  <div id="purchaseModal" class="modal">
+    <div class="modal-content">
+      <h3>Confirm Purchase</h3>
+      <p id="modalText"></p>
+      <div class="modal-buttons">
+        <button class="modal-btn confirm-btn" onclick="confirmPurchase()">Confirm</button>
+        <button class="modal-btn cancel-btn" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message Display -->
+  <div id="messageDisplay" class="message"></div>
 
   <!-- Bottom Navigation -->
   <div class="bottom-nav">
@@ -233,6 +445,142 @@
     <a href="#"><i class="fa-solid fa-users"></i>Team</a>
     <a href="#"><i class="fa-solid fa-user"></i>Profile</a>
   </div>
+
+  <script>
+    // User data (in a real app, this would come from your backend/database)
+    let userData = {
+      balance: 50000, // User's current balance
+      investments: [] // User's active investments
+    };
+
+    let currentPurchase = null;
+
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('en-NG', {
+        style: 'currency',
+        currency: 'NGN',
+        minimumFractionDigits: 0
+      }).format(amount);
+    }
+
+    function updateBalanceDisplay() {
+      // Balance display removed - keeping function for backend integration
+      // document.getElementById('userBalance').textContent = formatCurrency(userData.balance);
+    }
+
+    function showMessage(text, type = 'success') {
+      const messageDiv = document.getElementById('messageDisplay');
+      messageDiv.textContent = text;
+      messageDiv.className = `message ${type}`;
+      messageDiv.classList.add('show');
+      
+      setTimeout(() => {
+        messageDiv.classList.remove('show');
+      }, 4000);
+    }
+
+    function purchasePlan(planName, cost, dailyIncome) {
+      // Check if user has sufficient balance
+      if (userData.balance < cost) {
+        showMessage(`Insufficient balance! You need ${formatCurrency(cost)} but only have ${formatCurrency(userData.balance)}`, 'error');
+        return;
+      }
+
+      // Store purchase details for confirmation
+      currentPurchase = {
+        name: planName,
+        cost: cost,
+        dailyIncome: dailyIncome
+      };
+
+      // Show confirmation modal
+      const modalText = document.getElementById('modalText');
+      modalText.innerHTML = `
+        <strong>Plan:</strong> ${planName}<br>
+        <strong>Cost:</strong> ${formatCurrency(cost)}<br>
+        <strong>Daily Income:</strong> ${formatCurrency(dailyIncome)}<br><br>
+        Are you sure you want to purchase this plan?
+      `;
+      
+      document.getElementById('purchaseModal').style.display = 'block';
+    }
+
+    function confirmPurchase() {
+      if (!currentPurchase) return;
+
+      // Deduct cost from balance
+      userData.balance -= currentPurchase.cost;
+      
+      // Add investment to user's portfolio
+      userData.investments.push({
+        name: currentPurchase.name,
+        cost: currentPurchase.cost,
+        dailyIncome: currentPurchase.dailyIncome,
+        purchaseDate: new Date().toISOString(),
+        status: 'active'
+      });
+
+      // Update balance display
+      updateBalanceDisplay();
+
+      // Close modal
+      closeModal();
+
+      // Show success message
+      showMessage(`Successfully purchased ${currentPurchase.name}! Daily income: ${formatCurrency(currentPurchase.dailyIncome)}`);
+
+      // Here you would typically send this data to your backend
+      // Example: saveToDatabase(userData);
+      console.log('User data updated:', userData);
+
+      // Clear current purchase
+      currentPurchase = null;
+    }
+
+    function closeModal() {
+      document.getElementById('purchaseModal').style.display = 'none';
+      currentPurchase = null;
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('purchaseModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+
+    // Example function to integrate with your backend
+    function saveToDatabase(userInfo) {
+      // This is where you'd send the updated user data to your server
+      // Example using fetch API:
+      /*
+      fetch('/api/user/update-balance', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + userToken
+        },
+        body: JSON.stringify({
+          userId: currentUserId,
+          balance: userInfo.balance,
+          newInvestment: userInfo.investments[userInfo.investments.length - 1]
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Database updated successfully:', data);
+      })
+      .catch(error => {
+        console.error('Error updating database:', error);
+        showMessage('Error processing purchase. Please try again.', 'error');
+      });
+      */
+    }
+
+    // Initialize the display
+    updateBalanceDisplay();
+  </script>
 
 </body>
 </html>
