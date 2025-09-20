@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acorn - Financial Freedom</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Authentication Forms</title>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+          
     <style>
         * {
             margin: 0;
@@ -15,419 +19,839 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
-            overflow-x: hidden;
-             background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('https://acornpetroleum.com/wp-content/uploads/2012/04/marketing.jpg');
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header/Hero Section */
-        .main {
-            text-align: center;
-            padding: 80px 20px 60px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            margin: 40px 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
             overflow: hidden;
+            width: 100%;
+            max-width: 450px;
+            position: relative;
         }
 
-        .main::before {
-            content: '';
+        .form-container {
+            padding: 40px;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .form-container.hidden {
+            transform: translateX(100%);
+            opacity: 0;
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-            pointer-events: none;
+            top: 0;
+            left: 0;
+            right: 0;
         }
 
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .form-container.visible {
+            transform: translateX(0);
+            opacity: 1;
         }
 
-        .main h1 {
-            font-size: 3.5rem;
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .form-group {
             margin-bottom: 20px;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             position: relative;
-            z-index: 2;
         }
 
-        .main h1::before {
-            content: '🌰';
-            margin-right: 15px;
-            font-size: 2.5rem;
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
         }
 
-        .main p {
-            font-size: 1.3rem;
-            margin-bottom: 40px;
-            color: rgba(255, 255, 255, 0.9);
-            position: relative;
-            z-index: 2;
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .phone-group {
+            display: flex;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .phone-input {
+            flex: 2;
+        }
+
+        .code-input {
+            flex: 1;
+        }
+
+        .send-code-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .send-code-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .send-code-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .btn {
-            display: inline-block;
-            padding: 15px 40px;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
-            position: relative;
-            z-index: 2;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
         }
 
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
-        .btn i {
-            margin-right: 10px;
+        .btn:active {
+            transform: translateY(-1px);
         }
 
-        /* Navigation Sections */
-        .nav-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin: 40px 20px;
+        .btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .nav-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .nav-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        .nav-card h3 {
-            color: #333;
-            margin-bottom: 25px;
-            font-size: 1.4rem;
+        .switch-btn {
+            background: none;
+            border: none;
+            color: #667eea;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 20px;
+            width: 100%;
             text-align: center;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 10px;
+            padding: 10px;
+            transition: color 0.3s ease;
         }
 
-        .nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .switch-btn:hover {
+            color: #764ba2;
         }
 
-        .nav-links a {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            color: #333;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            color: #28a745;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .password-strength {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+
+        .strength-weak { color: #dc3545; }
+        .strength-medium { color: #ffc107; }
+        .strength-strong { color: #28a745; }
+
+        .loading {
             position: relative;
-            overflow: hidden;
+            color: transparent;
         }
 
-        .nav-links a::before {
+        .loading::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
-            transition: left 0.5s;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        .nav-links a:hover::before {
-            left: 100%;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-
-        .nav-links a:hover {
-            transform: translateX(10px);
-            border-left-color: #667eea;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-        }
-
-        .nav-links a i {
-            margin-right: 15px;
-            font-size: 1.2rem;
-            width: 25px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover i {
-            transform: scale(1.2);
-        }
-
-        /* Specific icon colors */
-        .nav-links a[href*="home"] i { color: #28a745; }
-        .nav-links a[href*="product"] i { color: #17a2b8; }
-        .nav-links a[href*="team"] i { color: #ffc107; }
-        .nav-links a[href*="mine"] i { color: #6f42c1; }
-        .nav-links a[href*="recharge"] i { color: #20c997; }
-        .nav-links a[href*="withdrawal"] i { color: #fd7e14; }
-        .nav-links a[href*="help"] i { color: #e83e8c; }
-        .nav-links a[href*="checkin"] i { color: #6610f2; }
-        .nav-links a[href*="login"] i { color: #dc3545; }
 
         /* Responsive Design */
+        @media (min-width: 1200px) {
+            .container { max-width: 500px; }
+            .form-container { padding: 50px; }
+            h2 { font-size: 32px; }
+            input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+                padding: 18px; font-size: 17px;
+            }
+            .btn { padding: 18px; font-size: 18px; }
+        }
+
+        @media (max-width: 1199px) and (min-width: 769px) {
+            .container { max-width: 450px; }
+            .form-container { padding: 40px; }
+        }
+
         @media (max-width: 768px) {
-            .main h1 {
-                font-size: 2.5rem;
+            body { padding: 15px; }
+            .container { max-width: 100%; margin: 0; }
+            .form-container { padding: 35px 30px; }
+            h2 { font-size: 26px; margin-bottom: 25px; }
+            input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+                padding: 14px; font-size: 16px;
             }
-            
-            .main p {
-                font-size: 1.1rem;
-            }
-            
-            .nav-section {
-                grid-template-columns: 1fr;
-                margin: 20px 10px;
-            }
-            
-            .nav-card {
-                padding: 20px;
-            }
-            
-            .main {
-                margin: 20px 10px;
-                padding: 60px 15px 40px;
-            }
+            .btn { padding: 14px; font-size: 16px; }
+            .send-code-btn { padding: 14px 18px; font-size: 13px; }
         }
 
         @media (max-width: 480px) {
-            .main h1 {
-                font-size: 2rem;
+            body { padding: 10px; }
+            .container { margin: 0; border-radius: 15px; }
+            .form-container { padding: 30px 25px; }
+            h2 { font-size: 24px; margin-bottom: 20px; }
+            .form-group { margin-bottom: 18px; }
+            input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+                padding: 12px; font-size: 16px; border-radius: 10px;
             }
-            
-            .btn {
-                padding: 12px 25px;
-                font-size: 1rem;
+            .btn { padding: 12px; font-size: 15px; border-radius: 10px; }
+            .phone-group { flex-direction: column; gap: 15px; align-items: stretch; }
+            .phone-input, .code-input { flex: none; }
+            .send-code-btn { padding: 12px 16px; font-size: 14px; border-radius: 10px; align-self: stretch; }
+            .switch-btn { font-size: 13px; margin-top: 15px; }
+        }
+
+        @media (max-width: 360px) {
+            .form-container { padding: 25px 20px; }
+            h2 { font-size: 22px; }
+            input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+                padding: 10px; font-size: 15px;
             }
-            
-            .nav-links a {
-                padding: 12px 15px;
-                font-size: 0.9rem;
+            .btn { padding: 10px; font-size: 14px; }
+            .send-code-btn { padding: 10px 12px; font-size: 13px; }
+            label { font-size: 13px; }
+            .error-message, .success-message { font-size: 11px; }
+        }
+
+        @media (max-height: 600px) and (orientation: landscape) {
+            body { padding: 10px; align-items: flex-start; padding-top: 20px; }
+            .container { margin: 0 auto; }
+            .form-container { padding: 25px 30px; }
+            h2 { font-size: 22px; margin-bottom: 15px; }
+            .form-group { margin-bottom: 15px; }
+        }
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+                border-width: 1px;
             }
+            .container { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); }
         }
-
-        /* Loading animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .main {
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .nav-card {
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .nav-card:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        /* Footer-like styling for better spacing */
-        body {
-            padding-bottom: 40px;
-        }
-        /* Bottom Navigation Bar */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(0,0,0,0.85);
-    display: flex;
-    justify-content: space-around;
-    padding: 8px 0;
-    border-top: 1px solid rgba(255,255,255,0.2);
-    z-index: 1000;
-}
-
-.bottom-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-}
-
-.bottom-nav a i {
-    font-size: 18px;
-    margin-bottom: 4px;
-}
-
-/* Ensure body doesn't hide behind nav */
-body {
-    padding-bottom: 60px; /* extra space so content isn’t hidden */
-}
-        .events {
-    margin: 20px;
-}
-
-.event-card {
-    background: rgba(255,255,255,0.9);
-    border-radius: 12px;
-    margin-bottom: 20px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-}
-
-.event-img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-}
-
-.event-info {
-    padding: 12px;
-    color: #333;
-}
-        @media (max-width: 400px) {
-  .bottom-nav a {
-    font-size: 10px;
-  }
-  .bottom-nav a i {
-    font-size: 16px;
-  }
-}
-
-/* Show bottom nav only on small screens */
-@media (min-width: 769px) {
-  .bottom-nav {
-    display: none;
-  }
-}
-
-
     </style>
 </head>
 <body>
-    <div class="main">
-        <h1>Welcome to Acorn</h1>
-        <p>Your gateway to financial freedom</p>
-        <a href="./login.html" class="btn">
-            <i class="fas fa-rocket"></i>Get Started
-        </a>
-    </div>
+    <div class="container">
+        <!-- Sign Up Form -->
+        <div id="signupForm" class="form-container visible">
+            <h2>Create Account</h2>
+            
+            <form id="signup">
+                <div class="form-group">
+                    <label for="signupPhone">Phone Number</label>
+                    <div class="phone-group">
+                        <div class="phone-input">
+                            <input type="tel" id="signupPhone" name="phone" placeholder="+234567890" required>
+                        </div>
+                    
+                    </div>
+                    <div class="error-message" id="phoneError"></div>
+                    <div class="success-message" id="phoneSuccess"></div>
+                </div>
 
-    <div class="nav-section">
-        <div class="nav-card">
-            <div class="nav-links inline-nav">
-                <a href="./home.html">
-                    <i class="fas fa-home"></i>Home
-                </a>
-                <a href="./product.html">
-                    <i class="fas fa-cube"></i>Product
-                </a>
-                <a href="./team.html">
-                    <i class="fas fa-users"></i>Team
-                </a>
-                <a href="./umine.html">
-                    <i class="fas fa-user"></i>Mine
-                </a>
-            </div>
+              
+
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" name="password" required>
+                    <div class="password-strength" id="passwordStrength"></div>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <div class="error-message" id="confirmPasswordError"></div>
+                </div>
+                
+                <a href="./index.html" class="btn" id="signupBtn">Join group</a>
+            </form>
+            
+            <button class="switch-btn" onclick="switchToLogin()">Already have an account? Login</button>
         </div>
 
-        <div class="nav-card">
-            <h3><i class="fas fa-tools"></i> Account Services</h3>
-            <div class="nav-links">
-                <a href="./vrecharge.html">
-                    <i class="fas fa-credit-card"></i>Recharge
-                </a>
-                <a href="./withdrawl.html">
-                    <i class="fas fa-money-bill-wave"></i>Withdrawal
-                </a>
-                <a href="./xhelp.html">
-                    <i class="fas fa-question-circle"></i>Help
-                </a>
-                <a href="./ycheckin.html">
-                    <i class="fas fa-calendar-check"></i>Check-in
-                </a>
-                <a href="./index.html">
-                    <i class="fas fa-sign-in-alt"></i>Login
-                </a>
-            </div>
+        <!-- Login Form -->
+        <div id="loginForm" class="form-container hidden">
+            <h2>Welcome Back</h2>
+            <form id="login">
+                <div class="form-group">
+                    <label for="loginPhone">Phone Number</label>
+                    <div class="phone-group">
+                        <div class="phone-input">
+                            <input type="tel" id="loginPhone" name="phone" placeholder="+1234567890" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                    <div class="error-message" id="loginPasswordError"></div>
+                </div>
+                
+                <a href="./index.html" class="btn" id="signupBtn">Login</a>
+            </form>
+            
+            <button class="switch-btn" onclick="switchToSignup()">Don't have an account? Sign Up</button>
         </div>
     </div>
 
-    
+    <script type="module">
+        // Firebase Configuration - Replace with your actual config
+        const firebaseConfig = {
+            apiKey: "your-api-key",
+            authDomain: "your-project-id.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project-id.appspot.com",
+            messagingSenderId: "your-sender-id",
+            appId: "your-app-id"
+        };
 
+        // Initialize Firebase
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-    <!-- Bottom Navigation -->
-<nav class="bottom-nav">
-  <a href="./home.html"><i class="fas fa-home"></i><span>Home</span></a>
-  <a href="./product.html"><i class="fas fa-cube"></i><span>Product</span></a>
-  <a href="./team.html"><i class="fas fa-users"></i><span>Team</span></a>
-  <a href="./umine.html"><i class="fas fa-user"></i><span>Mine</span></a>
-</nav>
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
+        // Global variables
+        let currentUser = null;
+        let verificationCode = "";
+
+        // Demo SMS Logic - Replaces Firebase SMS
+        function sendVerificationCode(phone) {
+            return new Promise((resolve) => {
+                verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+                setTimeout(() => {
+                    showSuccess("phoneSuccess", `Code sent to ${phone}. Demo code: ${verificationCode}`);
+                    document.getElementById("codeGroup").style.display = "block";
+                    resolve(true);
+                }, 1500);
+            });
+        }
+
+        async function verifyCode(code) {
+            if (!verificationCode) {
+                throw new Error("No verification code sent. Please request a new code.");
+            }
+            if (code !== verificationCode) {
+                throw new Error("Invalid verification code. Please try again.");
+            }
+            return { uid: "demo-user-" + Date.now() };
+        }
+
+        // Form switching functionality
+        window.switchToLogin = function() {
+            document.getElementById('signupForm').classList.add('hidden');
+            document.getElementById('signupForm').classList.remove('visible');
+            
+            setTimeout(() => {
+                document.getElementById('loginForm').classList.add('visible');
+                document.getElementById('loginForm').classList.remove('hidden');
+            }, 250);
+        }
+
+        window.switchToSignup = function() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('visible');
+            
+            setTimeout(() => {
+                document.getElementById('signupForm').classList.add('visible');
+                document.getElementById('signupForm').classList.remove('hidden');
+            }, 250);
+        }
+
+        // Utility functions for messages
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+        }
+
+        function hideError(elementId) {
+            const errorElement = document.getElementById(elementId);
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+        }
+
+        function showSuccess(elementId, message) {
+            const successElement = document.getElementById(elementId);
+            if (successElement) {
+                successElement.textContent = message;
+                successElement.style.display = 'block';
+            }
+        }
+
+        function hideSuccess(elementId) {
+            const successElement = document.getElementById(elementId);
+            if (successElement) {
+                successElement.style.display = 'none';
+            }
+        }
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            const strengthElement = document.getElementById('passwordStrength');
+            if (!strengthElement) return false;
+            
+            let strength = 0;
+            let feedback = '';
+
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+            if (strength < 3) {
+                feedback = 'Weak password';
+                strengthElement.className = 'password-strength strength-weak';
+            } else if (strength < 5) {
+                feedback = 'Medium strength password';
+                strengthElement.className = 'password-strength strength-medium';
+            } else {
+                feedback = 'Strong password';
+                strengthElement.className = 'password-strength strength-strong';
+            }
+
+            strengthElement.textContent = feedback;
+            return strength >= 3;
+        }
+
+        // Phone validation
+        function isValidPhoneNumber(phone) {
+            const phoneRegex = /^\+?[\d\s\-\(\)]{10,}$/;
+            return phoneRegex.test(phone);
+        }
+
+        // Convert phone to email format for Firebase Auth
+        function phoneToEmail(phone) {
+            return phone.replace(/[^0-9]/g, '') + '@phoneauth.local';
+        }
+
+        // Save user data to Firestore
+        async function saveUserToFirestore(uid, userData) {
+            try {
+                await setDoc(doc(db, 'users', uid), {
+                    phone: userData.phone,
+                    createdAt: new Date().toISOString(),
+                    lastLogin: new Date().toISOString(),
+                    phoneVerified: userData.phoneVerified || false
+                });
+                console.log('User data saved to Firestore');
+            } catch (error) {
+                console.error('Error saving user data:', error);
+                throw error;
+            }
+        }
+
+        // Get user data from Firestore
+        async function getUserFromFirestore(uid) {
+            try {
+                const docRef = doc(db, 'users', uid);
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    return docSnap.data();
+                } else {
+                    console.log('No such document!');
+                    return null;
+                }
+            } catch (error) {
+                console.error('Error getting user data:', error);
+                return null;
+            }
+        }
+
+        // Sign up with email/password (using phone as basis)
+        async function signUpWithEmail(phone, password, phoneVerified = false) {
+            try {
+                const email = phoneToEmail(phone);
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                
+                // Save additional user data to Firestore
+                await saveUserToFirestore(userCredential.user.uid, { 
+                    phone, 
+                    phoneVerified 
+                });
+                
+                return userCredential.user;
+            } catch (error) {
+                console.error('Error creating user:', error);
+                
+                if (error.code === 'auth/email-already-in-use') {
+                    throw new Error('Phone number already registered.');
+                } else if (error.code === 'auth/weak-password') {
+                    throw new Error('Password is too weak.');
+                } else {
+                    throw new Error('Failed to create account. Please try again.');
+                }
+            }
+        }
+
+        // Sign in with email/password
+        async function signInWithEmail(phone, password) {
+            try {
+                const email = phoneToEmail(phone);
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                
+                // Update last login in Firestore
+                await setDoc(doc(db, 'users', userCredential.user.uid), {
+                    lastLogin: new Date().toISOString()
+                }, { merge: true });
+                
+                return userCredential.user;
+            } catch (error) {
+                console.error('Error signing in:', error);
+                
+                if (error.code === 'auth/user-not-found') {
+                    throw new Error("Don't have an account? Please sign up first to continue.");
+                } else if (error.code === 'auth/wrong-password') {
+                    throw new Error('Incorrect password. Please try again.');
+                } else if (error.code === 'auth/invalid-email') {
+                    throw new Error('Invalid phone number format.');
+                } else {
+                    throw new Error('Failed to sign in. Please try again.');
+                }
+            }
+        }
+
+        // Logout function
+        window.logout = async function() {
+            try {
+                await signOut(auth);
+                console.log('User signed out');
+                window.location.reload();
+            } catch (error) {
+                console.error('Error signing out:', error);
+            }
+        }
+
+        // Event listeners setup
+        document.addEventListener('DOMContentLoaded', function() {
+            // Monitor auth state
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    currentUser = user;
+                    console.log('User is signed in:', user.uid);
+                    // Redirect to dashboard or update UI here
+                    // window.location.href = './dashboard.html';
+                } else {
+                    currentUser = null;
+                    console.log('User is signed out');
+                }
+            });
+
+            // Send verification code
+            const sendCodeBtn = document.getElementById('sendCodeBtn');
+            if (sendCodeBtn) {
+                sendCodeBtn.addEventListener('click', async function() {
+                    const phoneInput = document.getElementById('signupPhone');
+                    const phone = phoneInput.value.trim();
+                    
+                    if (!phone) {
+                        showError('phoneError', 'Please enter a phone number');
+                        return;
+                    }
+
+                    if (!isValidPhoneNumber(phone)) {
+                        showError('phoneError', 'Please enter a valid phone number');
+                        return;
+                    }
+
+                    this.disabled = true;
+                    this.classList.add('loading');
+                    this.textContent = 'Sending...';
+                    
+                    try {
+                        await sendVerificationCode(phone);
+                        hideError('phoneError');
+                        this.textContent = 'Resend Code';
+                    } catch (error) {
+                        showError('phoneError', error.message);
+                        this.textContent = 'Send Code';
+                    } finally {
+                        this.disabled = false;
+                        this.classList.remove('loading');
+                    }
+                });
+            }
+
+            // Password strength checking
+            const passwordInput = document.getElementById('signupPassword');
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    if (this.value) {
+                        checkPasswordStrength(this.value);
+                    } else {
+                        const strengthElement = document.getElementById('passwordStrength');
+                        if (strengthElement) strengthElement.textContent = '';
+                    }
+                });
+            }
+
+            // Confirm password validation
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            if (confirmPasswordInput) {
+                confirmPasswordInput.addEventListener('input', function() {
+                    const password = document.getElementById('signupPassword').value;
+                    if (this.value && this.value !== password) {
+                        showError('confirmPasswordError', 'Passwords do not match');
+                    } else {
+                        hideError('confirmPasswordError');
+                    }
+                });
+            }
+
+            // Sign up form submission
+            const signupForm = document.getElementById('signup');
+            if (signupForm) {
+                signupForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const phone = document.getElementById('signupPhone').value.trim();
+                    const code = document.getElementById('verificationCode').value.trim();
+                    const password = document.getElementById('signupPassword').value;
+                    const confirmPassword = document.getElementById('confirmPassword').value;
+
+                    let isValid = true;
+
+                    // Reset all errors
+                    ['phoneError', 'codeError', 'passwordError', 'confirmPasswordError'].forEach(hideError);
+
+                    // Validate phone
+                    if (!phone) {
+                        showError('phoneError', 'Phone number is required');
+                        isValid = false;
+                    }
+
+                    // Validate password
+                    if (!password) {
+                        showError('passwordError', 'Password is required');
+                        isValid = false;
+                    } else if (!checkPasswordStrength(password)) {
+                        showError('passwordError', 'Password is too weak');
+                        isValid = false;
+                    }
+
+                    // Validate password confirmation
+                    if (!confirmPassword) {
+                        showError('confirmPasswordError', 'Please confirm your password');
+                        isValid = false;
+                    } else if (password !== confirmPassword) {
+                        showError('confirmPasswordError', 'Passwords do not match');
+                        isValid = false;
+                    }
+
+                    if (!isValid) return;
+
+                    const signupBtn = document.getElementById('signupBtn');
+                    signupBtn.disabled = true;
+                    signupBtn.classList.add('loading');
+                    signupBtn.textContent = 'Creating Account...';
+
+                    try {
+                        let user;
+                        let phoneVerified = false;
+                        
+                        // Try phone verification first if code is provided
+                        if (code && verificationCode) {
+                            try {
+                                await verifyCode(code);
+                                phoneVerified = true;
+                                showSuccess('codeSuccess', 'Phone verified successfully!');
+                            } catch (phoneError) {
+                                showError('codeError', phoneError.message);
+                                signupBtn.disabled = false;
+                                signupBtn.classList.remove('loading');
+                                signupBtn.textContent = 'Sign Up';
+                                return;
+                            }
+                        }
+
+                        // Create account with Firebase Auth
+                        user = await signUpWithEmail(phone, password, phoneVerified);
+
+                        showSuccess('phoneSuccess', 'Account created successfully! Redirecting...');
+                        
+                        // Redirect after delay
+                        setTimeout(() => {
+                            // window.location.href = './dashboard.html';
+                            console.log('User created successfully:', user.uid);
+                        }, 1500);
+                        
+                    } catch (error) {
+                        showError('phoneError', error.message);
+                    } finally {
+                        signupBtn.disabled = false;
+                        signupBtn.classList.remove('loading');
+                        signupBtn.textContent = 'Sign Up';
+                    }
+                });
+            }
+
+            // Login form submission
+            const loginForm = document.getElementById('login');
+            if (loginForm) {
+                loginForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const phone = document.getElementById('loginPhone').value.trim();
+                    const password = document.getElementById('loginPassword').value.trim();
+
+                    // Clear previous errors
+                    hideError('loginPasswordError');
+
+                    // Basic validation
+                    if (!phone || !password) {
+                        showError('loginPasswordError', 'Please fill in all fields');
+                        return;
+                    }
+
+                    // Validate phone number format
+                    if (!isValidPhoneNumber(phone)) {
+                        showError('loginPasswordError', 'Please enter a valid phone number');
+                        return;
+                    }
+
+                    const loginBtn = document.getElementById('loginBtn');
+                    loginBtn.disabled = true;
+                    loginBtn.classList.add('loading');
+                    loginBtn.textContent = 'Signing In...';
+
+                    try {
+                        const user = await signInWithEmail(phone, password);
+                        showSuccess('loginPasswordError', 'Login successful! Redirecting...');
+                        
+                        // Redirect after delay
+                        setTimeout(() => {
+                            // window.location.href = './dashboard.html';
+                            console.log('User logged in successfully:', user.uid);
+                        }, 1500);
+                        
+                    } catch (error) {
+                        showError('loginPasswordError', error.message);
+                        
+                        // Add signup link for new users
+                        if (error.message.includes("Don't have an account")) {
+                            setTimeout(() => {
+                                const errorElement = document.getElementById('loginPasswordError');
+                                if (errorElement) {
+                                    const signupLink = document.createElement('div');
+                                    signupLink.innerHTML = '<span onclick="switchToSignup()" style="color: #3498db; text-decoration: underline; cursor: pointer;">Click here to sign up</span>';
+                                    signupLink.style.marginTop = '10px';
+                                    errorElement.appendChild(signupLink);
+                                }
+                            }, 100);
+                        }
+                    } finally {
+                        loginBtn.disabled = false;
+                        loginBtn.classList.remove('loading');
+                        loginBtn.textContent = 'Login';
+                    }
+                });
+            }
+
+            // Clear errors when user starts typing
+            const inputs = ['loginPhone', 'loginPassword', 'signupPhone', 'signupPassword', 'confirmPassword', 'verificationCode'];
+            inputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.addEventListener('input', function() {
+                        // Clear related error messages
+                        const errorMappings = {
+                            'loginPhone': 'loginPasswordError',
+                            'loginPassword': 'loginPasswordError',
+                            'signupPhone': 'phoneError',
+                            'signupPassword': 'passwordError',
+                            'confirmPassword': 'confirmPasswordError',
+                            'verificationCode': 'codeError'
+                        };
+                        
+                        const errorId = errorMappings[inputId];
+                        if (errorId) {
+                            hideError(errorId);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </body>
-    
-
 </html>
-
-
-
-
