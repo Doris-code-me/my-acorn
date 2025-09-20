@@ -112,10 +112,16 @@
     .green { background: #dcfce7; color: #16a34a; }
     .purple { background: #ede9fe; color: #7c3aed; }
     .orange { background: #ffedd5; color: #ea580c; }
+    .red { background: #fee2e2; color: #dc2626; }
+    .indigo { background: #e0e7ff; color: #4f46e5; }
+    .gray { background: #f3f4f6; color: #374151; }
+    .yellow { background: #fef9c3; color: #ca8a04; }
+    .cyan { background: #cffafe; color: #0891b2; }
 
-    .menu-item span {
+    .menu-item a {
       font-weight: 500;
       color: #333;
+      text-decoration: none;
     }
 
     .menu-item i.fa-chevron-right {
@@ -167,7 +173,7 @@
 
   <!-- Header -->
   <div class="header">
-    <button><i class="fa fa-arrow-left text-gray-600"></i></button>
+    <button><i class="fa fa-arrow-left"></i></button>
     <span>Profile</span>
   </div>
 
@@ -182,7 +188,7 @@
     <div class="menu-item">
       <div class="menu-item-left">
         <div class="icon-box blue"><i class="fa fa-credit-card"></i></div>
-        <span>Recharge</span>
+        <a href="#">Recharge</a>
       </div>
       <i class="fa fa-chevron-right"></i>
     </div>
@@ -190,7 +196,7 @@
     <div class="menu-item">
       <div class="menu-item-left">
         <div class="icon-box green"><i class="fa fa-download"></i></div>
-        <span>Withdrawal</span>
+        <a href="#">Withdrawal</a>
       </div>
       <i class="fa fa-chevron-right"></i>
     </div>
@@ -198,7 +204,7 @@
     <div class="menu-item">
       <div class="menu-item-left">
         <div class="icon-box purple"><i class="fa fa-chart-line"></i></div>
-        <span>Earnings</span>
+        <a href="#">Earnings</a>
       </div>
       <i class="fa fa-chevron-right"></i>
     </div>
@@ -206,7 +212,64 @@
     <div class="menu-item">
       <div class="menu-item-left">
         <div class="icon-box orange"><i class="fa fa-box"></i></div>
-        <span>My Products</span>
+        <a href="#">My Products</a>
+      </div>
+      <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <!-- Extended Menu Items -->
+    <div class="menu-item">
+      <div class="menu-item-left">
+        <div class="icon-box blue"><i class="fa fa-rotate-left"></i></div>
+        <a href="#">Recharge Records</a>
+      </div>
+      <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item-left">
+        <div class="icon-box red"><i class="fa fa-minus"></i></div>
+        <a href="#">Withdrawal Records</a>
+      </div>
+      <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item-left">
+        <div class="icon-box indigo"><i class="fa fa-user-plus"></i></div>
+        <a href="#">Team</a>
+      </div>
+      <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item-left">
+        <div class="icon-box gray"><i class="fa fa-landmark"></i></div>
+        <a href="#">Bank Account</a>
+      </div>
+      <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item-left">
+        <div class="icon-box yellow"><i class="fa fa-lock"></i></div>
+        <a href="#">Change Password</a>
+      </div>
+      <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item-left">
+        <div class="icon-box cyan"><i class="fa-brands fa-telegram"></i></div>
+        <a href="#">Telegram Support</a>
+      </div>
+      <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item-left">
+        <div class="icon-box red"><i class="fa fa-right-from-bracket"></i></div>
+        <a href="#">Logout</a>
       </div>
       <i class="fa fa-chevron-right"></i>
     </div>
@@ -215,10 +278,10 @@
   <!-- Bottom Nav -->
   <div class="bottom-nav">
     <ul>
-      <li><i class="fa fa-home"></i> Home</li>
-      <li><i class="fa fa-box"></i> Products</li>
-      <li><i class="fa fa-users"></i> Team</li>
-      <li class="active"><i class="fa fa-user"></i> Profile</li>
+      <li><i class="fa fa-home"></i> <a href="#">Home</a></li>
+      <li><i class="fa fa-box"></i> <a href="#">Products</a></li>
+      <li><i class="fa fa-users"></i> <a href="#">Team</a></li>
+      <li class="active"><i class="fa fa-user"></i> <a href="#">Profile</a></li>
     </ul>
   </div>
 
