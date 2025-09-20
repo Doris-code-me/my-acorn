@@ -319,6 +319,43 @@
         body {
             padding-bottom: 40px;
         }
+        .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 12px 0;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+    }
+
+    .bottom-nav a {
+        color: #fff;
+        font-size: 14px;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        transition: color 0.3s;
+    }
+
+    .bottom-nav a i {
+        font-size: 18px;
+    }
+
+    .bottom-nav a:hover {
+        color: #FFD700;
+    }
+
+    /* Prevent content hiding behind navbar */
+    body {
+        padding-bottom: 70px;
+    }
     </style>
 </head>
 <body>
@@ -377,7 +414,7 @@
                             <div class="feature-title">
                                 <i class="fas fa-clock"></i> Withdraw Hours
                             </div>
-                            <div><span class="highlight">8am to 10pm</span> Daily</div>
+                            <div><span class="highlight">9am to 6pm</span> Daily</div>
                         </div>
                         
                         <button class="telegram-button" onclick="joinTelegram()">
@@ -425,6 +462,7 @@
     </script>
 </body>
 </html>
+
 
 
 
