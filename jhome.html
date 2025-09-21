@@ -17,7 +17,7 @@
             min-height: 100vh;
             color: #333;
             overflow-x: hidden;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('https://acornpetroleum.com/wp-content/uploads/2012/04/marketing.jpg');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -294,6 +294,7 @@
             align-items: center;
             gap: 4px;
             transition: color 0.3s;
+            cursor: pointer;
         }
 
         .bottom-nav a i {
@@ -303,6 +304,8 @@
         .bottom-nav a:hover {
             color: #FFD700;
         }
+
+
 
         /* Loading animation */
         @keyframes fadeInUp {
@@ -367,17 +370,19 @@
     <div class="main">
         <h1>Welcome to Acorn</h1>
         <p>Your gateway to financial freedom</p>
-        <a href="./login.html" class="btn">
+        <a href="jhome.html" class="btn">
             <i class="fas fa-rocket"></i>Get Started
         </a>
     </div>
     
     <div class="bottom-nav">
-        <a href="./product.html"><i class="fas fa-home"></i> Home</a>
-        <a href="./products.html"><i class="fas fa-box-open"></i> Products</a>
-        <a href="./umine.html"><i class="fas fa-users"></i> Team</a>
-        <a href="./team.html"><i class="fas fa-user"></i> Profile</a>
+        <a href="product.html"><i class="fas fa-home"></i> Home</a>
+        <a href="products.html"><i class="fas fa-box-open"></i> Products</a>
+        <a href="umine.html"><i class="fas fa-users"></i> Team</a>
+        <a href="team.html"><i class="fas fa-user"></i> Profile</a>
     </div>
+
+
 
     <script>
         function showAcornAlert() {
@@ -446,6 +451,8 @@
             window.open('https://t.me/your_telegram_group', '_blank');
             closeAlert(); // Close alert after joining
         }
+
+
 
         // Auto-show alert when page loads
         window.addEventListener('load', function() {
