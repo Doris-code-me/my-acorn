@@ -318,6 +318,66 @@
         font-size: 18px;
       }
     }
+    .bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.bottom-nav a {
+  text-align: center;
+  text-decoration: none;
+  color: #666;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.bottom-nav i {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 3px;
+  transition: all 0.3s ease;
+}
+
+.bottom-nav a.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+}
+
+.bottom-nav a.active i {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bottom-nav a:hover {
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .bottom-nav a {
+    font-size: 12px;
+  }
+
+  .bottom-nav i {
+    font-size: 18px;
+  }
+}
   </style>
 </head>
 <body>
@@ -576,8 +636,51 @@
     // Initialize the display
     updateBalanceDisplay();
   </script>
+   <!-- Bottom Navigation -->
+<div class="bottom-nav">
+  <a href="home.html">
+    <i class="fa-solid fa-house"></i>
+    Home
+  </a>
+  <a href="product.html">
+    <i class="fa-solid fa-box"></i>
+    Product
+  </a>
+  <a href="team.html">
+    <i class="fa-solid fa-users"></i>
+    Team
+  </a>
+  <a href="profile.html">
+    <i class="fa-solid fa-user"></i>
+    Profile
+  </a>
+</div>
 
+<!-- Add this CSS to each page (or include in external CSS file) -->
+
+
+<!-- Make sure Font Awesome is included in the head section -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<!-- JavaScript to highlight active page -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Get current page filename
+  const currentPage = window.location.pathname.split('/').pop();
+  
+  // Remove active class from all nav items
+  const navItems = document.querySelectorAll('.bottom-nav a');
+  navItems.forEach(item => item.classList.remove('active'));
+  
+  // Add active class to current page
+  const activeNav = document.querySelector(`.bottom-nav a[href="${currentPage}"]`);
+  if (activeNav) {
+    activeNav.classList.add('active');
+  }
+});
+</script>
 </body>
 </html>
+
 
 
