@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Records</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: white;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e0e6ed;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #4a90e2;
+            cursor: pointer;
+            padding: 8px;
+            margin-right: 12px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: #f0f4f8;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .transaction-item {
+            background: white;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e6ed;
+            display: flex;
+            align-items: center;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+
+        .transaction-icon.recharge {
+            background: #e8f5e8;
+            color: #2d7d32;
+        }
+
+        .transaction-icon.withdrawal {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .transaction-icon.purchase {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .transaction-icon.bonus {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .transaction-icon.referral {
+            background: #e8f5e8;
+            color: #388e3c;
+        }
+
+        .transaction-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .transaction-id {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 4px;
+        }
+
+        .transaction-description {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 4px;
+        }
+
+        .transaction-date {
+            font-size: 12px;
+            color: #a0aec0;
+        }
+
+        .transaction-amount {
+            font-size: 16px;
+            font-weight: 700;
+            text-align: right;
+            flex-shrink: 0;
+            margin-left: 12px;
+        }
+
+        .transaction-amount.positive {
+            color: #2d7d32;
+        }
+
+        .transaction-amount.negative {
+            color: #d32f2f;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-icon {
+            width: 120px;
+            height: 120px;
+            background: #e8f4fd;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 48px;
+            color: #4a90e2;
+        }
+
+        .empty-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .empty-subtitle {
+            font-size: 16px;
+            color: #718096;
+            line-height: 1.5;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: #718096;
+            font-size: 16px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e0e6ed;
+            border-top-color: #4a90e2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .bottom-nav {
+            background: white;
+            border-top: 1px solid #e0e6ed;
+            padding: 12px 0;
+            display: flex;
+            justify-content: space-around;
+            position: sticky;
+            bottom: 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #718096;
+            transition: color 0.2s;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .nav-item.active {
+            color: #4a90e2;
+        }
+
+        .nav-item:hover {
+            color: #4a90e2;
+            background: #f0f4f8;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .filter-tabs {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-tab {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #718096;
+        }
+
+        .filter-tab.active {
+            background: #4a90e2;
+            color: white;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 16px;
+            }
+            
+            .transaction-item {
+                padding: 14px 16px;
+            }
+            
+            .filter-tabs {
+                margin-bottom: 16px;
+            }
+            
+            .filter-tab {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <h1 class="header-title">Transaction Records</h1>
+    </div>
+
+    <div class="main-content">
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <button class="filter-tab active" onclick="filterTransactions('all')">All</button>
+            <button class="filter-tab" onclick="filterTransactions('recharge')">Recharge</button>
+            <button class="filter-tab" onclick="filterTransactions('withdrawal')">Withdrawals</button>
+            <button class="filter-tab" onclick="filterTransactions('purchase')">Purchases</button>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading" id="loadingState">
+            <div class="spinner"></div>
+            Loading transactions...
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-icon">📋</div>
+            <h2 class="empty-title">No transactions found</h2>
+            <p class="empty-subtitle">Your transaction history will appear here when you start using the platform</p>
+        </div>
+
+        <!-- Transaction List -->
+        <div id="transactionList">
+            <!-- Dynamic content will be inserted here -->
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="./product.html" class="nav-item" onclick="navigateTo('home')">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Home</div>
+        </a>
+        <a href="./products.html" class="nav-item" onclick="navigateTo('products')">
+            <div class="nav-icon">🛍️</div>
+            <div class="nav-label">Products</div>
+        </a>
+        <a href="./umine.html" class="nav-item" onclick="navigateTo('team')">
+            <div class="nav-icon">👥</div>
+            <div class="nav-label">Team</div>
+        </a>
+        <a href="./team.html" class="nav-item active" onclick="navigateTo('profile')">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">Profile</div>
+        </a>
+    </div>
+
+    <script>
+        class TransactionManager {
+            constructor() {
+                this.currentFilter = 'all';
+                this.loadingState = document.getElementById('loadingState');
+                this.emptyState = document.getElementById('emptyState');
+                this.transactionList = document.getElementById('transactionList');
+                
+                this.loadTransactions();
+                this.setupAutoRefresh();
+            }
+
+            // Get all stored transactions from different sources
+            getAllTransactions() {
+                const transactions = [];
+                
+                // Get withdrawal transactions
+                try {
+                    const withdrawals = JSON.parse(localStorage.getItem('withdrawalHistory') || '[]');
+                    withdrawals.forEach(w => {
+                        transactions.push({
+                            id: w.reference || w.id,
+                            type: 'withdrawal',
+                            description: `Withdrawal to ${w.bank}`,
+                            amount: -w.amount,
+                            date: w.date,
+                            status: w.status
+                        });
+                    });
+                } catch (e) {}
+
+                // Get recharge transactions
+                try {
+                    const recharges = JSON.parse(localStorage.getItem('rechargeHistory') || '[]');
+                    recharges.forEach(r => {
+                        transactions.push({
+                            id: r.reference || r.id,
+                            type: 'recharge',
+                            description: 'Account recharge',
+                            amount: r.amount,
+                            date: r.date,
+                            status: r.status || 'completed'
+                        });
+                    });
+                } catch (e) {}
+
+                // Get purchase transactions
+                try {
+                    const purchases = JSON.parse(localStorage.getItem('purchaseHistory') || '[]');
+                    purchases.forEach(p => {
+                        transactions.push({
+                            id: p.reference || p.id,
+                            type: 'purchase',
+                            description: `Product purchase: ${p.productName}`,
+                            amount: -p.amount,
+                            date: p.date,
+                            status: p.status || 'completed'
+                        });
+                    });
+                } catch (e) {}
+
+                // Get bonus transactions
+                try {
+                    const bonuses = JSON.parse(localStorage.getItem('bonusHistory') || '[]');
+                    bonuses.forEach(b => {
+                        transactions.push({
+                            id: b.reference || b.id,
+                            type: 'bonus',
+                            description: b.description || 'Welcome bonus',
+                            amount: b.amount,
+                            date: b.date,
+                            status: 'completed'
+                        });
+                    });
+                } catch (e) {}
+
+                // Get referral transactions
+                try {
+                    const referrals = JSON.parse(localStorage.getItem('referralHistory') || '[]');
+                    referrals.forEach(r => {
+                        transactions.push({
+                            id: r.reference || r.id,
+                            type: 'referral',
+                            description: `Referral bonus - Level ${r.level}`,
+                            amount: r.amount,
+                            date: r.date,
+                            status: 'completed'
+                        });
+                    });
+                } catch (e) {}
+
+                // Sort by date (newest first)
+                return transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+            }
+
+            // Add sample transactions for testing
+            addSampleTransactions() {
+                const now = Date.now();
+                const sampleTransactions = [
+                    {
+                        id: 'MWSC7ZC78RYA',
+                        type: 'bonus',
+                        description: 'Welcome bonus',
+                        amount: 250.00,
+                        date: new Date(now - 3600000).toISOString(), // 1 hour ago
+                        status: 'completed'
+                    },
+                    {
+                        id: 'RCH' + now.toString().slice(-8),
+                        type: 'recharge',
+                        description: 'Account recharge',
+                        amount: 5000.00,
+                        date: new Date(now - 7200000).toISOString(), // 2 hours ago
+                        status: 'completed'
+                    },
+                    {
+                        id: 'PUR' + (now - 1000).toString().slice(-8),
+                        type: 'purchase',
+                        description: 'Product purchase: Premium Plan',
+                        amount: -2000.00,
+                        date: new Date(now - 10800000).toISOString(), // 3 hours ago
+                        status: 'completed'
+                    },
+                    {
+                        id: 'REF' + (now - 2000).toString().slice(-8),
+                        type: 'referral',
+                        description: 'Referral bonus - Level 1',
+                        amount: 150.00,
+                        date: new Date(now - 86400000).toISOString(), // 1 day ago
+                        status: 'completed'
+                    }
+                ];
+
+                // Save sample data to localStorage
+                localStorage.setItem('bonusHistory', JSON.stringify([{
+                    id: 'MWSC7ZC78RYA',
+                    description: 'Welcome bonus',
+                    amount: 250.00,
+                    date: new Date(now - 3600000).toISOString()
+                }]));
+
+                return sampleTransactions;
+            }
+
+            async loadTransactions() {
+                this.showLoading();
+                
+                // Simulate loading delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                let transactions = this.getAllTransactions();
+                
+                // If no transactions, add sample data for testing
+                if (transactions.length === 0) {
+                    transactions = this.addSampleTransactions();
+                }
+                
+                this.displayTransactions(transactions);
+            }
+
+            showLoading() {
+                this.loadingState.style.display = 'flex';
+                this.emptyState.style.display = 'none';
+                this.transactionList.style.display = 'none';
+            }
+
+            displayTransactions(transactions) {
+                this.loadingState.style.display = 'none';
+                
+                // Filter transactions based on current filter
+                const filteredTransactions = this.currentFilter === 'all' 
+                    ? transactions 
+                    : transactions.filter(t => t.type === this.currentFilter);
+                
+                if (filteredTransactions.length === 0) {
+                    this.emptyState.style.display = 'block';
+                    this.transactionList.style.display = 'none';
+                } else {
+                    this.emptyState.style.display = 'none';
+                    this.transactionList.style.display = 'block';
+                    this.renderTransactions(filteredTransactions);
+                }
+            }
+
+            renderTransactions(transactions) {
+                const html = transactions.map((transaction, index) => {
+                    const date = new Date(transaction.date);
+                    const formattedDate = date.toLocaleDateString('en-NG', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                    const formattedTime = date.toLocaleTimeString('en-NG', { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                    });
+
+                    const icon = this.getTransactionIcon(transaction.type);
+                    const amountClass = transaction.amount >= 0 ? 'positive' : 'negative';
+                    const amountPrefix = transaction.amount >= 0 ? '+' : '';
+                    
+                    return `
+                        <div class="transaction-item" style="animation-delay: ${index * 0.05}s">
+                            <div class="transaction-icon ${transaction.type}">
+                                ${icon}
+                            </div>
+                            <div class="transaction-details">
+                                <div class="transaction-id">${transaction.id}</div>
+                                <div class="transaction-description">${transaction.description}</div>
+                                <div class="transaction-date">${formattedDate}, ${formattedTime}</div>
+                            </div>
+                            <div class="transaction-amount ${amountClass}">
+                                ${amountPrefix}₦${Math.abs(transaction.amount).toLocaleString('en-NG', {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                this.transactionList.innerHTML = html;
+            }
+
+            getTransactionIcon(type) {
+                const icons = {
+                    recharge: '💳',
+                    withdrawal: '💸',
+                    purchase: '🛒',
+                    bonus: '🎁',
+                    referral: '👥'
+                };
+                return icons[type] || '📋';
+            }
+
+            setupAutoRefresh() {
+                // Refresh transactions every 30 seconds
+                setInterval(() => {
+                    this.refreshTransactions();
+                }, 30000);
+            }
+
+            refreshTransactions() {
+                const transactions = this.getAllTransactions();
+                this.displayTransactions(transactions);
+            }
+
+            // Static method to add new transactions from other pages
+            static addTransaction(transactionData) {
+                const storageKey = `${transactionData.type}History`;
+                try {
+                    const existing = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                    existing.unshift(transactionData);
+                    localStorage.setItem(storageKey, JSON.stringify(existing));
+                } catch (e) {
+                    console.error('Could not save transaction:', e);
+                }
+            }
+        }
+
+        // Global functions
+        function filterTransactions(type) {
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update filter and reload
+            const manager = window.transactionManager;
+            if (manager) {
+                manager.currentFilter = type;
+                const transactions = manager.getAllTransactions();
+                manager.displayTransactions(transactions);
+            }
+        }
+
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = 'profile.html';
+            }
+        }
+
+        function navigateTo(page) {
+            const urls = {
+                home: 'index.html',
+                products: 'products.html',
+                team: 'team.html',
+                profile: 'profile.html'
+            };
+            
+            if (urls[page]) {
+                window.location.href = urls[page];
+            }
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            window.transactionManager = new TransactionManager();
+        });
+
+        // Make classes available globally for integration
+        window.TransactionManager = TransactionManager;
+    </script>
+</body>
+</html>
+
