@@ -1,1 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdrawal History</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            min-height: 80vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-3px);
+        }
+
+        .content {
+            padding: 30px;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .empty-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            color: #cbd5e0;
+        }
+
+        .empty-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .empty-description {
+            color: #718096;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .withdrawal-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .withdrawal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .withdrawal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .withdrawal-btn:hover::before {
+            left: 100%;
+        }
+
+        .history-list {
+            display: none;
+        }
+
+        .history-item {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .history-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .history-amount {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .history-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-failed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .history-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 0.9em;
+            color: #718096;
+            margin-bottom: 3px;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .history-footer {
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.9em;
+            color: #718096;
+        }
+
+        .bottom-nav {
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #718096;
+            padding: 10px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            min-width: 60px;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .nav-icon {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .nav-label {
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-card:nth-child(2) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .stat-card:nth-child(3) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .stat-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .refresh-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            width: 45px;
+            height: 45px;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+                margin-bottom: 80px;
+            }
+            
+            .header {
+                padding: 25px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+
+            .history-details {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .empty-icon {
+                font-size: 3em;
+            }
+            
+            .withdrawal-btn {
+                padding: 12px 25px;
+                font-size: 1.1em;
+            }
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e2e8f0;
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="window.history.back()">← Back</button>
+            <button class="refresh-btn" id="refreshBtn" title="Refresh history">🔄</button>
+            <h1>📜 Withdrawal History</h1>
+            <p>Track all your withdrawal transactions</p>
+        </div>
+
+        <div class="content">
+            <!-- Loading State -->
+            <div class="loading" id="loadingState">
+                <div class="spinner"></div>
+                <p>Loading withdrawal history...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon">📧</div>
+                <div class="empty-title">No withdrawal history</div>
+                <div class="empty-description">Your withdrawal records will appear here</div>
+                <a href="withdraw.html" class="withdrawal-btn">Make a Withdrawal</a>
+            </div>
+
+            <!-- Statistics Row (when there are withdrawals) -->
+            <div class="stats-row" id="statsRow" style="display: none;">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalWithdrawals">#0</div>
+                    <div class="stat-label">Total Withdrawn</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="successfulWithdrawals">0</div>
+                    <div class="stat-label">Successful</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="pendingWithdrawals">0</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+            </div>
+
+            <!-- History List -->
+            <div class="history-list" id="historyList"></div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="./product.html" class="nav-item">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Home</div>
+        </a>
+        <a href="./products.html" class="nav-item">
+            <div class="nav-icon">📦</div>
+            <div class="nav-label">Products</div>
+        </a>
+        <a href="./umine.html" class="nav-item">
+            <div class="nav-icon">👥</div>
+            <div class="nav-label">Team</div>
+        </a>
+        <a href="./team.html" class="nav-item active">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">Profile</div>
+        </a>
+    </div>
+
+    <script>
+        class WithdrawalHistory {
+            constructor() {
+                this.withdrawals = [];
+                this.initializeElements();
+                this.loadWithdrawalHistory();
+                this.setupEventListeners();
+            }
+
+            initializeElements() {
+                this.loadingState = document.getElementById('loadingState');
+                this.emptyState = document.getElementById('emptyState');
+                this.historyList = document.getElementById('historyList');
+                this.statsRow = document.getElementById('statsRow');
+                this.refreshBtn = document.getElementById('refreshBtn');
+                this.totalWithdrawals = document.getElementById('totalWithdrawals');
+                this.successfulWithdrawals = document.getElementById('successfulWithdrawals');
+                this.pendingWithdrawals = document.getElementById('pendingWithdrawals');
+            }
+
+            setupEventListeners() {
+                this.refreshBtn.addEventListener('click', () => {
+                    this.refreshHistory();
+                });
+
+                // Listen for storage changes (when withdrawals are made in another tab)
+                window.addEventListener('storage', (e) => {
+                    if (e.key === 'withdrawalHistory') {
+                        this.loadWithdrawalHistory();
+                    }
+                });
+            }
+
+            getStoredValue(key, defaultValue = '[]') {
+                try {
+                    const stored = localStorage?.getItem(key);
+                    return stored ? stored : defaultValue;
+                } catch (error) {
+                    console.warn('LocalStorage not available:', error);
+                    return defaultValue;
+                }
+            }
+
+            setStoredValue(key, value) {
+                try {
+                    if (typeof localStorage !== 'undefined') {
+                        localStorage.setItem(key, value);
+                    }
+                } catch (error) {
+                    console.warn('Cannot save to localStorage:', error);
+                }
+            }
+
+            loadWithdrawalHistory() {
+                this.showLoading(true);
+                
+                setTimeout(() => {
+                    try {
+                        const storedHistory = this.getStoredValue('withdrawalHistory', '[]');
+                        this.withdrawals = JSON.parse(storedHistory);
+                        
+                        // Add some demo data if no history exists (for demonstration)
+                        if (this.withdrawals.length === 0) {
+                            this.addDemoData();
+                        }
+                        
+                        this.displayHistory();
+                        this.showLoading(false);
+                    } catch (error) {
+                        console.error('Error loading withdrawal history:', error);
+                        this.withdrawals = [];
+                        this.displayHistory();
+                        this.showLoading(false);
+                    }
+                }, 1000); // Simulate loading time
+            }
+
+            addDemoData() {
+                // This method adds demo withdrawal data for demonstration
+                // In real implementation, this would be removed
+                const demoWithdrawals = [
+                    {
+                        id: 'WD12345678',
+                        amount: 5000,
+                        fee: 1000,
+                        netAmount: 4000,
+                        bank: 'United Bank For Africa (UBA)',
+                        accountNumber: '0123456789',
+                        accountName: 'John Doe',
+                        status: 'success',
+                        date: new Date(Date.now() - 86400000 * 2).toISOString(), // 2 days ago
+                        reference: 'WD12345678'
+                    },
+                    {
+                        id: 'WD12345679',
+                        amount: 2000,
+                        fee: 400,
+                        netAmount: 1600,
+                        bank: 'Zenith Bank',
+                        accountNumber: '0987654321',
+                        accountName: 'Jane Smith',
+                        status: 'pending',
+                        date: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
+                        reference: 'WD12345679'
+                    },
+                    {
+                        id: 'WD12345680',
+                        amount: 1500,
+                        fee: 300,
+                        netAmount: 1200,
+                        bank: 'First Bank of Nigeria',
+                        accountNumber: '1122334455',
+                        accountName: 'Mike Johnson',
+                        status: 'success',
+                        date: new Date().toISOString(), // Today
+                        reference: 'WD12345680'
+                    }
+                ];
+                
+                this.withdrawals = demoWithdrawals;
+                this.setStoredValue('withdrawalHistory', JSON.stringify(this.withdrawals));
+            }
+
+            showLoading(show) {
+                if (show) {
+                    this.loadingState.classList.add('show');
+                    this.emptyState.style.display = 'none';
+                    this.historyList.style.display = 'none';
+                    this.statsRow.style.display = 'none';
+                } else {
+                    this.loadingState.classList.remove('show');
+                }
+            }
+
+            displayHistory() {
+                if (this.withdrawals.length === 0) {
+                    this.showEmptyState();
+                    return;
+                }
+
+                this.showHistoryList();
+                this.updateStatistics();
+                this.renderWithdrawals();
+            }
+
+            showEmptyState() {
+                this.emptyState.style.display = 'flex';
+                this.historyList.style.display = 'none';
+                this.statsRow.style.display = 'none';
+            }
+
+            showHistoryList() {
+                this.emptyState.style.display = 'none';
+                this.historyList.style.display = 'block';
+                this.statsRow.style.display = 'grid';
+            }
+
+            updateStatistics() {
+                const total = this.withdrawals.reduce((sum, w) => sum + w.amount, 0);
+                const successful = this.withdrawals.filter(w => w.status === 'success').length;
+                const pending = this.withdrawals.filter(w => w.status === 'pending').length;
+
+                this.totalWithdrawals.textContent = `#${total.toLocaleString()}`;
+                this.successfulWithdrawals.textContent = successful.toString();
+                this.pendingWithdrawals.textContent = pending.toString();
+            }
+
+            renderWithdrawals() {
+                const sortedWithdrawals = [...this.withdrawals].sort((a, b) => 
+                    new Date(b.date) - new Date(a.date)
+                );
+
+                this.historyList.innerHTML = sortedWithdrawals.map(withdrawal => 
+                    this.createWithdrawalCard(withdrawal)
+                ).join('');
+            }
+
+            createWithdrawalCard(withdrawal) {
+                const statusClass = `status-${withdrawal.status}`;
+                const statusText = withdrawal.status.charAt(0).toUpperCase() + withdrawal.status.slice(1);
+                const date = new Date(withdrawal.date);
+                const formattedDate = date.toLocaleDateString('en-NG', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                return `
+                    <div class="history-item">
+                        <div class="history-header">
+                            <div class="history-amount">#${withdrawal.amount.toLocaleString()}</div>
+                            <div class="history-status ${statusClass}">${statusText}</div>
+                        </div>
+                        
+                        <div class="history-details">
+                            <div class="detail-item">
+                                <div class="detail-label">Bank</div>
+                                <div class="detail-value">${withdrawal.bank}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Account</div>
+                                <div class="detail-value">${withdrawal.accountNumber}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Account Name</div>
+                                <div class="detail-value">${withdrawal.accountName}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Amount Received</div>
+                                <div class="detail-value">#${withdrawal.netAmount.toLocaleString()}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="history-footer">
+                            <strong>Reference:</strong> ${withdrawal.reference} • 
+                            <strong>Date:</strong> ${formattedDate}
+                            ${withdrawal.fee ? ` • <strong>Fee:</strong> #${withdrawal.fee.toLocaleString()}` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            refreshHistory() {
+                this.refreshBtn.style.transform = 'rotate(360deg)';
+                this.loadWithdrawalHistory();
+                
+                setTimeout(() => {
+                    this.refreshBtn.style.transform = '';
+                }, 600);
+            }
+
+            // Method to add new withdrawal (called from withdrawal page)
+            addWithdrawal(withdrawalData) {
+                const withdrawal = {
+                    id: withdrawalData.reference || 'WD' + Date.now(),
+                    amount: withdrawalData.amount,
+                    fee: withdrawalData.fee || 0,
+                    netAmount: withdrawalData.netAmount || withdrawalData.amount,
+                    bank: withdrawalData.bank,
+                    accountNumber: withdrawalData.accountNumber,
+                    accountName: withdrawalData.accountName,
+                    status: withdrawalData.status || 'pending',
+                    date: new Date().toISOString(),
+                    reference: withdrawalData.reference || 'WD' + Date.now()
+                };
+
+                this.withdrawals.unshift(withdrawal); // Add to beginning
+                this.setStoredValue('withdrawalHistory', JSON.stringify(this.withdrawals));
+                this.displayHistory();
+            }
+        }
+
+        // Initialize the withdrawal history system
+        document.addEventListener('DOMContentLoaded', () => {
+            window.withdrawalHistory = new WithdrawalHistory();
+        });
+
+        // Expose method for adding withdrawals from other pages
+        window.addWithdrawal = function(withdrawalData) {
+            if (window.withdrawalHistory) {
+                window.withdrawalHistory.addWithdrawal(withdrawalData);
+            }
+        };
+    </script>
+</body>
+</html>
 
