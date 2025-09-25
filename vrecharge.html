@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recharge History - Chip Pay</title>
+    <title>Recharge Form</title>
     <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -21,80 +21,21 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-        }
-
-        /* Header */
-        .header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .back-button {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: white;
-            cursor: pointer;
-            margin-right: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateX(-2px);
-        }
-
-        .header-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .header-title::before {
-            content: '\f1da';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.3rem;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 40px 20px;
-            display: flex;
             justify-content: center;
             align-items: center;
-            min-height: calc(100vh - 200px);
+            padding: 20px;
         }
 
-        .empty-state {
+        .recharge {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 20px;
-            padding: 50px 40px;
-            text-align: center;
+            padding: 40px 30px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            max-width: 450px;
+            max-width: 500px;
             width: 100%;
             animation: slideUp 0.6s ease-out;
-            position: relative;
-            overflow: hidden;
         }
 
         @keyframes slideUp {
@@ -108,103 +49,172 @@
             }
         }
 
-        .empty-state:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
-        }
-
-        .empty-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 30px;
+        .records {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            border-radius: 50%;
-            position: relative;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
         }
 
-        .empty-icon::before {
-            content: '\f3d1';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            font-size: 2rem;
-            color: white;
-        }
-
-        .empty-icon::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            opacity: 0.3;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.3;
-            }
-            50% {
-                transform: scale(1.1);
-                opacity: 0.1;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 0.3;
-            }
-        }
-
-        .empty-title {
-            font-size: 1.8rem;
-            font-weight: 700;
+        .records h1 {
             color: #2d3748;
-            margin-bottom: 15px;
+            font-size: 2rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
         }
 
-        .empty-title::before {
+        .records h1::before {
+            content: '\f3d1';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #667eea;
+            font-size: 1.8rem;
+        }
+
+        .records button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .records button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .records button::before {
+            content: '\f1da';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            margin-right: 8px;
+        }
+
+        h2 {
+            color: #2d3748;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2::before {
             content: '\f0e7';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             color: #ffd700;
-            font-size: 1.5rem;
+            margin-right: 10px;
         }
 
-        .empty-subtitle {
-            font-size: 1rem;
-            color: #718096;
-            margin-bottom: 40px;
-            line-height: 1.6;
-            font-weight: 500;
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
         }
 
-        .recharge-button {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        .buttons button {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
             border: none;
-            border-radius: 15px;
-            padding: 20px 40px;
-            font-size: 1.2rem;
-            font-weight: 700;
+            padding: 15px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            width: 100%;
-            max-width: 280px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             position: relative;
             overflow: hidden;
         }
 
-        .recharge-button::before {
+        .buttons button::before {
+            content: '₦';
+            font-family: inherit;
+            margin-right: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .buttons button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+        }
+
+        .buttons button:active {
+            transform: translateY(-1px);
+        }
+
+        .buton {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .buton input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            padding: 18px 20px 18px 50px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            color: #2d3748;
+            outline: none;
+        }
+
+        .buton input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .buton input::placeholder {
+            color: #a0aec0;
+            font-weight: 500;
+        }
+
+        .buton::before {
+            content: '₦';
+            font-family: inherit;
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.2rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .submit {
+            margin-top: 20px;
+        }
+
+        .submit button {
+            width: 100%;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit button::before {
             content: '\f1d8';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
@@ -212,17 +222,50 @@
             font-size: 1.1rem;
         }
 
-        .recharge-button:hover {
+        .submit button:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(46, 204, 113, 0.4);
         }
 
-        .recharge-button:active {
+        .submit button:active {
             transform: translateY(-1px);
         }
 
-        /* Ripple effect */
-        .recharge-button::after {
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .recharge {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            .buttons {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .records h1 {
+                font-size: 1.5rem;
+            }
+            
+            .buttons button {
+                padding: 12px 8px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Add some hover effects for better UX */
+        .recharge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Add ripple effect */
+        button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::after {
             content: '';
             position: absolute;
             top: 50%;
@@ -236,320 +279,43 @@
             z-index: 0;
         }
 
-        .recharge-button:active::after {
+        button:active::after {
             width: 300px;
             height: 300px;
         }
 
-        .recharge-button span {
+        button span {
             position: relative;
             z-index: 1;
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 15px 0;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: rgba(255, 255, 255, 0.7);
-            transition: all 0.3s ease;
-            padding: 8px 12px;
-            border-radius: 12px;
-        }
-
-        .nav-item:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .nav-item.active {
-            color: white;
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .nav-icon {
-            font-size: 1.3rem;
-            margin-bottom: 5px;
-        }
-
-        .nav-label {
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 480px) {
-            .header {
-                padding: 12px 16px;
-            }
-
-            .header-title {
-                font-size: 1.3rem;
-            }
-
-            .main-content {
-                padding: 20px 16px;
-            }
-
-            .empty-state {
-                padding: 40px 25px;
-                margin: 0 10px;
-            }
-
-            .empty-title {
-                font-size: 1.5rem;
-            }
-
-            .empty-subtitle {
-                font-size: 0.9rem;
-            }
-
-            .recharge-button {
-                padding: 18px 30px;
-                font-size: 1rem;
-            }
-
-            .nav-icon {
-                font-size: 1.1rem;
-            }
-
-            .nav-label {
-                font-size: 0.7rem;
-            }
-
-            .empty-icon {
-                width: 60px;
-                height: 60px;
-                margin-bottom: 20px;
-            }
-
-            .empty-icon::before {
-                font-size: 1.5rem;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .empty-state {
-                padding: 30px 20px;
-            }
-            
-            .empty-title {
-                font-size: 1.3rem;
-            }
-            
-            .recharge-button {
-                padding: 16px 25px;
-                font-size: 0.95rem;
-            }
-        }
-
-        /* Add floating particles effect */
-        .floating-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: float 6s infinite ease-in-out;
-        }
-
-        .particle:nth-child(1) { width: 6px; height: 6px; left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { width: 8px; height: 8px; left: 20%; animation-delay: 1s; }
-        .particle:nth-child(3) { width: 4px; height: 4px; left: 30%; animation-delay: 2s; }
-        .particle:nth-child(4) { width: 10px; height: 10px; left: 40%; animation-delay: 3s; }
-        .particle:nth-child(5) { width: 6px; height: 6px; left: 50%; animation-delay: 4s; }
-        .particle:nth-child(6) { width: 8px; height: 8px; left: 60%; animation-delay: 5s; }
-        .particle:nth-child(7) { width: 4px; height: 4px; left: 70%; animation-delay: 0s; }
-        .particle:nth-child(8) { width: 6px; height: 6px; left: 80%; animation-delay: 1s; }
-        .particle:nth-child(9) { width: 8px; height: 8px; left: 90%; animation-delay: 2s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <!-- Floating particles background effect -->
-    <div class="floating-particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
+       <div class="recharge">
+          <div class="records">
+              <h1>Recharge</h1>
+              <button>Records</button>  
+          </div>
+          <h2>Quick Amount</h2>
+              <div class="buttons">
+                 <button>#750</button>
+                 <button>#1500</button>
+                 <button>#2500</button>
+                 <button>#5000</button>
+                 <button>#7500</button>
+                 <button>#17500</button>
+                 <button>#25000</button>
+                 <button>#50000</button>
+                 <button>#75000</button>
+              </div>
+              <div class="buton">
+                <input type="number" placeholder="Enter custom amount in #" min="1" step="1">
 
-    <!-- Header -->
-    <div class="header">
-        <button class="back-button" onclick="goBack()">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <h1 class="header-title">Recharge History</h1>
-    </div>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="empty-state">
-            <div class="empty-icon"></div>
-            <h2 class="empty-title">No recharge history</h2>
-            <p class="empty-subtitle">Your recharge records will appear here once you start making transactions</p>
-            <button class="recharge-button" onclick="makeRecharge()">
-                <span>Make a Recharge</span>
-            </button>
-        </div>
-    </main>
-
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <a href="./product.html" class="nav-item active">
-            <i class="fas fa-home nav-icon"></i>
-            <span class="nav-label">Home</span>
-        </a>
-        <a href="./products.html" class="nav-item">
-            <i class="fas fa-th-large nav-icon"></i>
-            <span class="nav-label">Products</span>
-        </a>
-        <a href="./umine.html" class="nav-item">
-            <i class="fas fa-users nav-icon"></i>
-            <span class="nav-label">Team</span>
-        </a>
-        <a href="./team.html" class="nav-item">
-            <i class="fas fa-user nav-icon"></i>
-            <span class="nav-label">Profile</span>
-        </a>
-    </nav>
-
-    <script>
-        function goBack() {
-            // Navigate back to the previous page
-            console.log('Going back...');
-            // You can implement this based on your routing system:
-            // window.history.back();
-            // Or redirect to a specific page:
-            // window.location.href = '/dashboard';
-        }
-
-        function makeRecharge() {
-            // Navigate to the recharge page
-            console.log('Navigate to recharge page...');
-            // You can redirect to your recharge page:
-            // window.location.href = '/recharge';
-            // Or if you're using the recharge form in the same app:
-            showRechargeForm();
-        }
-
-        // Optional: Add active state management for navigation
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get current page name from URL
-            const currentPage = window.location.pathname.split('/').pop();
-            
-            // Remove active class from all nav items
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Add active class based on current page
-            const navLinks = {
-                'product.html': 0,      // Home
-                'products.html': 1,     // Products
-                'umine.html': 2,        // Team
-                'team.html': 3,         // Profile
-                'recharge-history.html': 0  // Default to home for this page
-            };
-            
-            const activeIndex = navLinks[currentPage] || 0;
-            document.querySelectorAll('.nav-item')[activeIndex].classList.add('active');
-            
-            checkRechargeHistory();
-        });
-
-        function showRechargeForm() {
-            // If you want to show the recharge form inline, you can modify the page
-            // Or redirect to the recharge page
-            console.log('Showing recharge form...');
-            
-            // Example of inline replacement (optional):
-            // You can replace the empty state with your recharge form
-            // This would require integrating your recharge form HTML here
-        }
-
-        // Function to check for recharge records (you'll connect this to your backend)
-        async function checkRechargeHistory() {
-            try {
-                // This would typically make an API call to your backend
-                // const response = await fetch('/api/recharge-history');
-                // const data = await response.json();
-                
-                // For now, returning false to show empty state
-                return false;
-                
-                // If you have records, you would:
-                // if (data.records && data.records.length > 0) {
-                //     displayRechargeRecords(data.records);
-                //     return true;
-                // }
-            } catch (error) {
-                console.error('Error checking recharge history:', error);
-                return false;
-            }
-        }
-
-        function displayRechargeRecords(records) {
-            // Function to display recharge records when they exist
-            const mainContent = document.querySelector('.main-content');
-            
-            // Replace empty state with records list
-            mainContent.innerHTML = `
-                <div class="records-container">
-                    <div class="records-header">
-                        <h2>Your Recharge History</h2>
-                        <button class="add-recharge-btn" onclick="makeRecharge()">
-                            <i class="fas fa-plus"></i> New Recharge
-                        </button>
-                    </div>
-                    <div class="records-list">
-                        ${records.map(record => `
-                            <div class="record-item">
-                                <div class="record-amount">₦${record.amount.toLocaleString()}</div>
-                                <div class="record-date">${new Date(record.date).toLocaleDateString()}</div>
-                                <div class="record-status ${record.status.toLowerCase()}">${record.status}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            checkRechargeHistory();
-        });
-    </script>
+              </div> 
+              <div class="submit">
+                <button><i class="fas fa-paper-plane"></i> Submit</button>
+              </div>
+      </div>
 </body>
+
 </html>
