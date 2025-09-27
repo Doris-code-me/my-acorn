@@ -291,32 +291,8 @@
         </div>
     </div>
 
-    <script>
-    // --- 1. Link Handling for Menu Items ---
-    function handleNavigation(url, event) {
-        // Prevent the default link action from triggering if the 'a' tag was clicked
-        if (event.target.tagName === 'A' || event.target.tagName === 'I') {
-            return;
-        }
-        
-        // ************************************************
-        // * THIS IS THE ONLY LINE YOU NEED TO CHANGE BACK! *
-        // ************************************************
-        
-        // COMMENT OUT or REMOVE the alert:
-        // alert("Navigating to: " + url + "\n\n(Note: In a real app, this would load a new page.)");
-        
-        // UNCOMMENT the real navigation command:
-        window.location.href = url;
-    }
-
-    // --- 2. Back Button ---
-    // (Keep the rest of your script as it is, including the active state logic)
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // ... (rest of the active state code) ...
-    });
-</script>
+   
 </body>
 </html>
+
 
