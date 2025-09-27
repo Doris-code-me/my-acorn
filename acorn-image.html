@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acorn Logo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+        <!-- Your SVG Logo -->
+        <svg viewBox="0 0 120 144" xmlns="http://www.w3.org/2000/svg" width="120" height="144">
+            <defs>
+                <linearGradient id="capGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#8B4513;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#A0522D;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#654321;stop-opacity:1" />
+                </linearGradient>
+                
+                <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#DEB887;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#D2691E;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#CD853F;stop-opacity:1" />
+                </linearGradient>
+
+                <radialGradient id="highlight" cx="30%" cy="30%" r="40%">
+                    <stop offset="0%" style="stop-color:#F5DEB3;stop-opacity:0.8" />
+                    <stop offset="100%" style="stop-color:#F5DEB3;stop-opacity:0" />
+                </radialGradient>
+            </defs>
+
+            <!-- Acorn Body -->
+            <ellipse cx="60" cy="78" rx="27" ry="33" fill="url(#bodyGradient)" stroke="#8B4513" stroke-width="1.2"/>
+            
+            <!-- Acorn Cap -->
+            <ellipse cx="60" cy="51" rx="30" ry="15" fill="url(#capGradient)" stroke="#654321" stroke-width="1.2"/>
+            
+            <!-- Cap texture lines -->
+            <g stroke="#654321" stroke-width="1" fill="none" opacity="0.7">
+                <path d="M36 45 Q60 39 84 45"/>
+                <path d="M39 51 Q60 45 81 51"/>
+                <path d="M42 57 Q60 51 78 57"/>
+            </g>
+            
+            <!-- Body highlight -->
+            <ellipse cx="60" cy="78" rx="27" ry="33" fill="url(#highlight)"/>
+            
+            <!-- Small stem -->
+            <rect x="59" y="36" width="2.4" height="9" fill="#8B4513" rx="1.2"/>
+            
+            <!-- Decorative dots on cap -->
+            <g fill="#654321" opacity="0.6">
+                <circle cx="48" cy="48" r="1.2"/>
+                <circle cx="60" cy="45" r="1.2"/>
+                <circle cx="72" cy="48" r="1.2"/>
+                <circle cx="54" cy="54" r="0.9"/>
+                <circle cx="66" cy="54" r="0.9"/>
+            </g>
+            
+            <!-- Text "Acorn" -->
+            <text x="60" y="129" font-family="Arial, sans-serif" font-size="19" font-weight="bold" fill="#654321" text-anchor="middle">
+                Acorn
+            </text>
+            
+            <!-- Text shadow for depth -->
+            <text x="60.6" y="129.6" font-family="Arial, sans-serif" font-size="19" font-weight="bold" fill="#8B4513" text-anchor="middle" opacity="0.3">
+                Acorn
+            </text>
+        </svg>
+</body>
+</html>
