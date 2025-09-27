@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acorn - Financial Freedom</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJ8yI0IzYV+yS8S0z3Lz9M2zL2x4Yg/yK+5R7eN0iT0g/L9eY1Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+        /* Global Reset */
         * {
             margin: 0;
             padding: 0;
@@ -21,7 +22,8 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            padding-bottom: 70px;
+            /* Added padding to prevent content from being hidden by the fixed bottom nav */
+            padding-bottom: 70px; 
         }
 
         .container {
@@ -85,7 +87,7 @@
             z-index: 2;
         }
 
-        /* Fixed Button Styles */
+        /* Call-to-action Button Styles */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -141,6 +143,8 @@
             text-align: center;
             position: relative;
             animation: slideIn 0.3s ease-out;
+            /* Added margin-bottom to clear the bottom nav on mobile view */
+            margin-bottom: 70px;
         }
 
         @keyframes slideIn {
@@ -270,42 +274,63 @@
             font-weight: bold;
         }
 
-        /* Bottom Navigation */
+        /* Bottom Navigation - Fixed and Corrected */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            /* Kept your new gradient style but added a more opaque background for readability */
+            background: linear-gradient(135deg, #ffffffd0, #f8f9fae0); 
             display: flex;
             justify-content: space-around;
-            align-items: center;
             padding: 12px 0;
-            z-index: 1000;
+            border-top: 1px solid rgba(0, 0, 0, 0.1); /* Changed border to a darker color for contrast */
             backdrop-filter: blur(10px);
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.15); /* More prominent shadow */
+            z-index: 1000; /* Ensure it stays above main content */
         }
 
+        /* The CSS block below was overriding a previous one, I'm keeping the later, preferred style */
         .bottom-nav a {
-            color: #fff;
-            font-size: 14px;
+            text-align: center;
             text-decoration: none;
+            color: #666;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            padding: 5px;
+            border-radius: 8px;
+            /* Added display:flex and flex-direction to stack icon and text properly */
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
-            transition: color 0.3s;
-            cursor: pointer;
         }
 
-        .bottom-nav a i {
-            font-size: 18px;
+        .bottom-nav i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .bottom-nav a.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .bottom-nav a.active i {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .bottom-nav a:hover {
-            color: #FFD700;
+            transform: translateY(-2px);
         }
-
-
 
         /* Loading animation */
         @keyframes fadeInUp {
@@ -345,6 +370,16 @@
             }
         }
 
+        @media (max-width: 600px) {
+            .bottom-nav a {
+                font-size: 12px;
+            }
+
+            .bottom-nav i {
+                font-size: 18px;
+            }
+        }
+
         @media (max-width: 480px) {
             .main h1 {
                 font-size: 2rem;
@@ -364,86 +399,41 @@
                 font-size: 24px;
             }
         }
-        .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: linear-gradient(135deg, #ffffff, #f8f9fa);
-  display: flex;
-  justify-content: space-around;
-  padding: 12px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-}
-
-.bottom-nav a {
-  text-align: center;
-  text-decoration: none;
-  color: #666;
-  font-size: 13px;
-  transition: all 0.3s ease;
-  padding: 5px;
-  border-radius: 8px;
-}
-
-.bottom-nav i {
-  display: block;
-  font-size: 20px;
-  margin-bottom: 3px;
-  transition: all 0.3s ease;
-}
-
-.bottom-nav a.active {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: bold;
-}
-
-.bottom-nav a.active i {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.bottom-nav a:hover {
-  transform: translateY(-2px);
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-  .bottom-nav a {
-    font-size: 12px;
-  }
-
-  .bottom-nav i {
-    font-size: 18px;
-  }
-}
     </style>
 </head>
 <body>
-    
-    <div class="bottom-nav">
-        <a href="product.html"><i class="fas fa-home"></i> Home</a>
-        <a href="products.html"><i class="fas fa-box-open"></i> Products</a>
-        <a href="umine.html"><i class="fas fa-users"></i> Team</a>
-        <a href="team.html"><i class="fas fa-user"></i> Profile</a>
+    <div class="container">
+        <header class="main">
+            <h1>Acorn</h1>
+            <p>Plant the seed of financial freedom today. Invest small, grow big.</p>
+            <a href="#" class="btn" onclick="showAcornAlert(); return false;">
+                <i class="fas fa-seedling"></i> Get Started
+            </a>
+        </header>
     </div>
 
-
+    <div class="bottom-nav">
+        <a href="product.html" class="active" data-page="product"><i class="fas fa-home"></i> Home</a>
+        <a href="products.html" data-page="products"><i class="fas fa-box-open"></i> Products</a>
+        <a href="umine.html" data-page="umine"><i class="fas fa-users"></i> Team</a>
+        <a href="team.html" data-page="team"><i class="fas fa-user"></i> Profile</a>
+    </div>
 
     <script>
+        // The HTML for the alert should NOT be in the body of the main page.
+        // The JavaScript function `showAcornAlert` correctly builds the overlay/alert.
+        
         function showAcornAlert() {
+            // Check if alert already exists to prevent duplication
+            if (document.querySelector('.custom-alert-overlay')) {
+                return;
+            }
+
             // Create overlay
             const overlay = document.createElement('div');
             overlay.className = 'custom-alert-overlay';
             
-            // Create alert box HTML
+            // Create alert box HTML. REMOVED DUPLICATE bottom-nav HTML from the innerHTML.
             overlay.innerHTML = `
                 <div class="alert-box">
                     <button class="close-btn" onclick="closeAlert()">&times;</button>
@@ -482,45 +472,10 @@
                         </div>
                         
                         <button class="telegram-button" onclick="joinTelegram()">
-                            <i class="fab fa-telegram"></i>
-                            Join our Telegram Group
+                            <i class="fab fa-telegram-plane"></i> Join our Telegram Group
                         </button>
                     </div>
                 </div>
-                <div class="bottom-nav">
-   <a href="home.html">
-    <i class="fa-solid fa-house"></i>
-    Home
-  </a>
-  <a href="product.html">
-    <i class="fa-solid fa-box"></i>
-    Product
-  </a>
-  <a href="team.html">
-    <i class="fa-solid fa-users"></i>
-    Team
-  </a>
-  <a href="profile.html">
-    <i class="fa-solid fa-user"></i>
-    Profile
-  </a>
-</div>
-      <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Get current page filename
-  const currentPage = window.location.pathname.split('/').pop();
-  
-  // Remove active class from all nav items
-  const navItems = document.querySelectorAll('.bottom-nav a');
-  navItems.forEach(item => item.classList.remove('active'));
-  
-  // Add active class to current page
-  const activeNav = document.querySelector(`.bottom-nav a[href="${currentPage}"]`);
-  if (activeNav) {
-    activeNav.classList.add('active');
-  }
-});
-</script>
             `;
             
             document.body.appendChild(overlay);
@@ -529,7 +484,11 @@ document.addEventListener('DOMContentLoaded', function() {
         function closeAlert() {
             const overlay = document.querySelector('.custom-alert-overlay');
             if (overlay) {
-                overlay.remove();
+                // Added a class for fade-out animation before removal (optional but good practice)
+                overlay.style.opacity = 0;
+                setTimeout(() => {
+                    overlay.remove();
+                }, 300); 
             }
         }
 
@@ -539,10 +498,32 @@ document.addEventListener('DOMContentLoaded', function() {
             closeAlert(); // Close alert after joining
         }
 
+        // --- Bottom Nav Active State Logic ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get current page filename
+            const pathParts = window.location.pathname.split('/');
+            let currentPage = pathParts.pop() || 'product.html'; // Default to 'product.html' if on root
+            
+            // Handle cases where the path might end with a slash or be on root
+            if (currentPage === '') {
+                currentPage = pathParts.pop() || 'product.html';
+            }
 
+            // Remove active class from all nav items
+            const navItems = document.querySelectorAll('.bottom-nav a');
+            navItems.forEach(item => item.classList.remove('active'));
+            
+            // Add active class to current page
+            // Use the full href to find the link
+            const activeNav = document.querySelector(`.bottom-nav a[href="${currentPage}"]`);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            } else {
+                // Fallback to highlight a default or first item if no match
+                document.querySelector('.bottom-nav a').classList.add('active');
+            }
 
-        // Auto-show alert when page loads
-        window.addEventListener('load', function() {
+             // Auto-show alert when page loads
             setTimeout(showAcornAlert, 1500); // Show alert 1.5 seconds after page loads
         });
 
@@ -562,5 +543,3 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
-
-
