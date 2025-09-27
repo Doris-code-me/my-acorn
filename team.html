@@ -1,549 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Report</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Report</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
-            min-height: 100vh;
-            /* Increased padding for comfortable mobile viewing */
-            padding-bottom: 80px; 
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
 
-        .header {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: white;
-            padding: 24px 16px;
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
-        }
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 24px 16px;
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
 
-        .header-content {
-            max-width: 448px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+    .header-content {
+      max-width: 448px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-        .back-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    .back-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .back-btn:hover { background: rgba(255, 255, 255, 0.3); }
 
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
+    .header-title { font-size: 20px; font-weight: 700; }
 
-        .header-title {
-            font-size: 20px;
-            font-weight: 700;
-        }
+    .container {
+      max-width: 448px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
 
-        .container {
-            max-width: 448px;
-            margin: 0 auto;
-            padding: 24px 16px;
-        }
+    .referral-tools-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      padding: 24px;
+      color: white;
+      margin-bottom: 24px;
+      box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+    }
 
-        .referral-tools-card {
-            background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
-            border-radius: 16px;
-            padding: 24px;
-            color: white;
-            margin-bottom: 24px;
-            box-shadow: 0 20px 40px rgba(249, 115, 22, 0.3);
-        }
+    .card-title { font-size: 20px; font-weight: 700; margin-bottom: 24px; }
+    .tool-section { margin-bottom: 24px; }
+    .tool-label { color: rgba(255, 255, 255, 0.8); font-size: 14px; margin-bottom: 8px; }
 
-        .card-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 24px;
-        }
+    .tool-input {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
 
-        .tool-section {
-            margin-bottom: 24px;
-        }
+    .tool-value { font-weight: 600; font-size: 16px; flex: 1; word-break: break-all; }
+    .code-value { font-size: 18px; letter-spacing: 0.1em; }
 
-        .tool-section:last-child {
-            margin-bottom: 0;
-        }
+    .copy-btn {
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      border: none;
+      color: #333;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .copy-btn:hover { transform: scale(1.05); }
 
-        .tool-label {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
+    .copy-feedback { color: #bbf7d0; font-size: 12px; margin-top: 4px; }
+    .hidden { display: none; }
 
-        .tool-input {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
+    .level-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
 
-        .tool-value {
-            font-weight: 600;
-            font-size: 16px;
-            letter-spacing: 0.05em;
-            flex: 1;
-            word-break: break-all;
-        }
+    .level-header {
+      padding: 16px 24px;
+      color: white;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .direct-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .level2-header { background: linear-gradient(135deg, #764ba2 0%, #9f7aea 100%); }
 
-        .code-value {
-            font-size: 18px;
-            letter-spacing: 0.1em;
-        }
+    .level-body { padding: 24px; text-align: center; }
 
-        .copy-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-        }
+    .percentage {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-        .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
+    .commission-label { color: #6b7280; font-size: 14px; margin-bottom: 16px; }
 
-        .copy-feedback {
-            color: #bbf7d0;
-            font-size: 12px;
-            margin-top: 4px;
-        }
+    .view-team-btn {
+      width: 100%;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    .view-team-btn:hover { opacity: 0.9; transform: translateY(-2px); }
 
-        .level-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
+    .earnings-card {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 16px;
+      padding: 24px;
+      color: white;
+      margin-bottom: 24px;
+      box-shadow: 0 20px 40px rgba(16, 185, 129, 0.3);
+    }
 
-        .level-header {
-            padding: 16px 24px;
-            color: white;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .earnings-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+    .earnings-amount { font-size: 36px; font-weight: 700; margin-bottom: 4px; }
+    .earnings-subtitle { color: rgba(255, 255, 255, 0.8); font-size: 14px; }
 
-        .direct-header {
-            background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
-        }
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: white; border-top: 1px solid #e5e7eb;
+      padding: 8px 0; z-index: 1000;
+    }
 
-        .level2-header {
-            background: linear-gradient(135deg, #dc2626 0%, #ec4899 100%);
-        }
+    .nav-content {
+      max-width: 448px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      padding: 0 16px;
+    }
 
-        .level-body {
-            padding: 24px;
-            text-align: center;
-        }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 16px;
+      color: #9ca3af;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      flex-basis: 25%;
+      font-size: 12px;
+    }
+    .nav-item:hover { color: #6b7280; }
+    .nav-item.active { color: #764ba2; }
 
-        .percentage {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .direct-percentage {
-            color: #f97316;
-        }
-
-        .level2-percentage {
-            color: #dc2626;
-        }
-
-        .commission-label {
-            color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
-
-        .view-team-btn {
-            width: 100%;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            text-decoration: none; /* Ensure link buttons look good */
-        }
-
-        .direct-btn {
-            background: #f97316;
-            color: white;
-        }
-
-        .direct-btn:hover {
-            background: #ea580c;
-        }
-
-        .level2-btn {
-            background: #dc2626;
-            color: white;
-        }
-
-        .level2-btn:hover {
-            background: #b91c1c;
-        }
-
-        .earnings-card {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            border-radius: 16px;
-            padding: 24px;
-            color: white;
-            margin-bottom: 24px;
-            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.3);
-        }
-
-        .earnings-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .earnings-amount {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .earnings-subtitle {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            border-top: 1px solid #e5e7eb;
-            padding: 8px 0;
-            z-index: 1000;
-        }
-
-        .nav-content {
-            max-width: 448px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-around;
-            padding: 0 16px;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 8px 16px;
-            color: #9ca3af;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            /* Added flex-basis to ensure even spacing */
-            flex-basis: 25%;
-        }
-
-        .nav-item:hover {
-            color: #6b7280;
-        }
-
-        .nav-item.active {
-            color: #f97316;
-        }
-
-        .nav-icon {
-            width: 20px;
-            height: 20px;
-            margin-bottom: 4px;
-            fill: currentColor;
-        }
-
-        .nav-label {
-            font-size: 12px;
-            line-height: 1.2; /* Better text alignment */
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* Icons using SVG */
-        .icon {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 16px 12px;
-            }
-            
-            /* Removed margin fix for mobile as it was not necessary and could cause issues */
-        }
-    </style>
+    .nav-item i { font-size: 18px; margin-bottom: 4px; }
+    @media (max-width: 480px) { .container { padding: 16px 12px; } }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-content">
-            <button class="back-btn" onclick="history.back()">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
-                </svg>
-            </button>
-            <h1 class="header-title">Team Report</h1>
-            <div style="width: 32px;"></div>
+  <div class="header">
+    <div class="header-content">
+      <button class="back-btn" onclick="history.back()">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <h1 class="header-title">Team Report</h1>
+      <div style="width: 32px;"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Referral Tools -->
+    <div class="referral-tools-card">
+      <h2 class="card-title">Your Referral Tools</h2>
+      <div class="tool-section">
+        <p class="tool-label">Invitation Code</p>
+        <div class="tool-input">
+          <span class="tool-value code-value" id="invitationCode">VMJPDC</span>
+          <button class="copy-btn" onclick="copyToClipboard('invitationCode','code')">
+            <i class="fas fa-copy"></i>
+          </button>
         </div>
+        <p class="copy-feedback hidden" id="codeFeedback">Code copied!</p>
+      </div>
+      <div class="tool-section">
+        <p class="tool-label">Invitation Link</p>
+        <div class="tool-input">
+          <span class="tool-value" id="invitationLink">https://wallmartex.site/register?invite=VMJPDC</span>
+          <button class="copy-btn" onclick="copyToClipboard('invitationLink','link')">
+            <i class="fas fa-link"></i>
+          </button>
+        </div>
+        <p class="copy-feedback hidden" id="linkFeedback">Link copied!</p>
+      </div>
     </div>
 
-    <div class="container">
-        <div class="referral-tools-card">
-            <h2 class="card-title">Your Referral Tools</h2>
-            
-            <div class="tool-section">
-                <p class="tool-label">Invitation Code</p>
-                <div class="tool-input">
-                    <span class="tool-value code-value" id="invitationCode">VMJPDC</span>
-                    <button class="copy-btn" onclick="copyToClipboard('invitationCode', 'code')">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
-                            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
-                        </svg>
-                    </button>
-                </div>
-                <p class="copy-feedback hidden" id="codeFeedback">Code copied!</p>
-            </div>
-
-            <div class="tool-section">
-                <p class="tool-label">Invitation Link</p>
-                <div class="tool-input">
-                    <span class="tool-value" id="invitationLink">https://wallmartex.site/register?invite=VMJPDC</span>
-                    <button class="copy-btn" onclick="copyToClipboard('invitationLink', 'link')">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
-                            <path d="M4 16c-1.1 0-2-.9-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
-                        </svg>
-                    </button>
-                </div>
-                <p class="copy-feedback hidden" id="linkFeedback">Link copied!</p>
-            </div>
-        </div>
-
-        <div class="level-card">
-            <div class="level-header direct-header">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-                <span>Direct Referral</span>
-            </div>
-            <div class="level-body">
-                <div class="percentage direct-percentage">25%</div>
-                <p class="commission-label">Commission</p>
-                <a href="./direct-team.html" class="view-team-btn direct-btn">
-                    View Team
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
-
-        <div class="level-card">
-            <div class="level-header level2-header">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
-                    <path d="M14 9h1.5a2.5 2.5 0 0 0 0-5H14"/>
-                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
-                    <path d="M6 2h12"/>
-                </svg>
-                <span>Level 2</span>
-            </div>
-            <div class="level-body">
-                <div class="percentage level2-percentage">3%</div>
-                <p class="commission-label">Commission</p>
-                <a href="./level2-team.html" class="view-team-btn level2-btn">
-                    View Team
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
-
-        <div class="earnings-card">
-            <h3 class="earnings-title">Total Earnings</h3>
-            <div class="earnings-amount" id="totalEarnings">₦450.00</div>
-            <p class="earnings-subtitle">From all referrals</p>
-        </div>
+    <!-- Direct Referral -->
+    <div class="level-card">
+      <div class="level-header direct-header"><i class="fas fa-user-friends"></i> Direct Referral</div>
+      <div class="level-body">
+        <div class="percentage">25%</div>
+        <p class="commission-label">Commission</p>
+        <a href="./direct-team.html" class="view-team-btn">
+          View Team <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
     </div>
 
-    <div class="bottom-nav">
-        <div class="nav-content">
-            <a href="./home.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                    <polyline points="9,22 9,12 15,12 15,22"/>
-                </svg>
-                <span class="nav-label">Home</span>
-            </a>
-            <a href="./products.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                </svg>
-                <span class="nav-label">Products</span>
-            </a>
-            <a href="./team.html" class="nav-item active">
-                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-                <span class="nav-label">Team</span>
-            </a>
-            <a href="./profile.html" class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                </svg>
-                <span class="nav-label">Profile</span>
-            </a>
-        </div>
+    <!-- Level 2 -->
+    <div class="level-card">
+      <div class="level-header level2-header"><i class="fas fa-users"></i> Level 2</div>
+      <div class="level-body">
+        <div class="percentage">3%</div>
+        <p class="commission-label">Commission</p>
+        <a href="./level2-team.html" class="view-team-btn">
+          View Team <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
     </div>
 
-    <script>
-        // User data - in real app, this would come from your backend
-        const userData = {
-            id: 'USR123',
-            name: 'John Doe',
-            invitationCode: 'VMJPDC',
-            directReferrals: 25,
-            level2Referrals: 3,
-            totalEarnings: 450.00
-        };
+    <!-- Earnings -->
+    <div class="earnings-card">
+      <h3 class="earnings-title">Total Earnings</h3>
+      <div class="earnings-amount" id="totalEarnings">₦450.00</div>
+      <p class="earnings-subtitle">From all referrals</p>
+    </div>
+  </div>
 
-        // Generate unique user data on page load
-        function initializeUserData() {
-            const codes = ['VMJPDC', 'XK9P2L', 'RT5NM8', 'QW7B3F', 'ZY1CX6'];
-            const randomCode = codes[Math.floor(Math.random() * codes.length)];
-            
-            userData.invitationCode = randomCode;
-            // Updated link to match the name 'wallmartex.site' from the HTML
-            userData.invitationLink = `https://wallmartex.site/register?invite=${randomCode}`; 
-            
-            // Update DOM elements
-            document.getElementById('invitationCode').textContent = userData.invitationCode;
-            document.getElementById('invitationLink').textContent = userData.invitationLink;
-            // Corrected currency display to Naira (₦)
-            document.getElementById('totalEarnings').textContent = `₦${userData.totalEarnings.toFixed(2)}`; 
-        }
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <div class="nav-content">
+      <a href="./product.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
+      <a href="./products.html" class="nav-item"><i class="fas fa-box-open"></i> Products</a>
+      <a href="./team.html" class="nav-item active"><i class="fas fa-users"></i> Team</a>
+      <a href="./profile.html" class="nav-item"><i class="fas fa-user"></i> Profile</a>
+    </div>
+  </div>
 
-        // Copy to clipboard function
-        async function copyToClipboard(elementId, type) {
-            const element = document.getElementById(elementId);
-            const text = element.textContent;
-            
-            try {
-                await navigator.clipboard.writeText(text);
-                
-                // Show feedback
-                const feedbackId = type === 'code' ? 'codeFeedback' : 'linkFeedback';
-                const feedback = document.getElementById(feedbackId);
-                feedback.classList.remove('hidden');
-                
-                // Hide feedback after 2 seconds
-                setTimeout(() => {
-                    feedback.classList.add('hidden');
-                }, 2000);
-                
-            } catch (err) {
-                console.error('Failed to copy text: ', err);
-                // Fallback for older browsers
-                fallbackCopyTextToClipboard(text, type);
-            }
-        }
+  <script>
+    const userData = {
+      id: 'USR123',
+      name: 'John Doe',
+      invitationCode: 'VMJPDC',
+      totalEarnings: 450.00
+    };
 
-        // Fallback copy function for older browsers
-        function fallbackCopyTextToClipboard(text, type) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            
-            textArea.style.top = "0";
-            textArea.style.left = "0";
-            textArea.style.position = "fixed";
-            
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
-                document.execCommand('copy');
-                
-                // Show feedback
-                const feedbackId = type === 'code' ? 'codeFeedback' : 'linkFeedback';
-                const feedback = document.getElementById(feedbackId);
-                feedback.classList.remove('hidden');
-                
-                setTimeout(() => {
-                    feedback.classList.add('hidden');
-                }, 2000);
-                
-            } catch (err) {
-                console.error('Fallback: Oops, unable to copy', err);
-            }
-            
-            document.body.removeChild(textArea);
-        }
+    function initializeUserData() {
+      const codes = ['VMJPDC','XK9P2L','RT5NM8','QW7B3F','ZY1CX6'];
+      const randomCode = codes[Math.floor(Math.random()*codes.length)];
+      userData.invitationCode = randomCode;
+      userData.invitationLink = `https://wallmartex.site/register?invite=${randomCode}`;
+      document.getElementById('invitationCode').textContent = userData.invitationCode;
+      document.getElementById('invitationLink').textContent = userData.invitationLink;
+      document.getElementById('totalEarnings').textContent = `₦${userData.totalEarnings.toFixed(2)}`;
+    }
 
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeUserData();
-        });
+    async function copyToClipboard(elementId,type) {
+      const element=document.getElementById(elementId);
+      const text=element.textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        const feedbackId=type==='code'?'codeFeedback':'linkFeedback';
+        const feedback=document.getElementById(feedbackId);
+        feedback.classList.remove('hidden');
+        setTimeout(()=>feedback.classList.add('hidden'),2000);
+      } catch(err){ fallbackCopyTextToClipboard(text,type); }
+    }
 
-        // Navigation functionality (Removed click event logic since links should just navigate)
-        // If you want active state logic to work across pages, you'll need the script from the previous chat.
-        // For a single file, the 'active' class is hardcoded on the Team item, which is correct here.
-        
-        // Navigation buttons should use their 'href' for real navigation
-        document.querySelectorAll('.view-team-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                // In a real app: window.location.href = this.href;
-                alert("Navigating to: " + this.href);
-            });
-        });
-    </script>
+    function fallbackCopyTextToClipboard(text,type){
+      const textArea=document.createElement("textarea");
+      textArea.value=text;
+      textArea.style.position="fixed";
+      document.body.appendChild(textArea);
+      textArea.focus(); textArea.select();
+      try{ document.execCommand('copy'); }catch(err){ console.error(err); }
+      document.body.removeChild(textArea);
+      const feedbackId=type==='code'?'codeFeedback':'linkFeedback';
+      document.getElementById(feedbackId).classList.remove('hidden');
+      setTimeout(()=>document.getElementById(feedbackId).classList.add('hidden'),2000);
+    }
+
+    document.addEventListener('DOMContentLoaded',initializeUserData);
+  </script>
 </body>
 </html>
