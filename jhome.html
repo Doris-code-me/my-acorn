@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acorn - Financial Freedom</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJ8yI0IzYV+yS8S0z3Lz9M2zL2x4Yg/yK+5R7eN0iT0g/L9eY1Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* Global Reset */
         * {
@@ -22,8 +22,7 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            /* Added padding to prevent content from being hidden by the fixed bottom nav */
-            padding-bottom: 70px; 
+            padding-bottom: 70px;
         }
 
         .container {
@@ -143,7 +142,6 @@
             text-align: center;
             position: relative;
             animation: slideIn 0.3s ease-out;
-            /* Added margin-bottom to clear the bottom nav on mobile view */
             margin-bottom: 70px;
         }
 
@@ -280,18 +278,16 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            /* Kept your new gradient style but added a more opaque background for readability */
             background: linear-gradient(135deg, #ffffffd0, #f8f9fae0); 
             display: flex;
             justify-content: space-around;
             padding: 12px 0;
-            border-top: 1px solid rgba(0, 0, 0, 0.1); /* Changed border to a darker color for contrast */
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
-            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.15); /* More prominent shadow */
-            z-index: 1000; /* Ensure it stays above main content */
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
         }
 
-        /* The CSS block below was overriding a previous one, I'm keeping the later, preferred style */
         .bottom-nav a {
             text-align: center;
             text-decoration: none;
@@ -300,7 +296,6 @@
             transition: all 0.3s ease;
             padding: 5px;
             border-radius: 8px;
-            /* Added display:flex and flex-direction to stack icon and text properly */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -402,19 +397,25 @@
     </style>
 </head>
 <body>
-  
+    <!-- Main Content -->
+    <div class="main">
+        <h1>Acorn</h1>
+        <p>Start your journey to financial freedom today</p>
+        <button class="btn" onclick="showAcornAlert()">
+            <i class="fas fa-seedling"></i>
+            Get Started
+        </button>
+    </div>
 
+    <!-- Bottom Navigation -->
     <div class="bottom-nav">
         <a href="./product.html" class="active" data-page="product"><i class="fas fa-home"></i> Home</a>
         <a href="./products.html" data-page="products"><i class="fas fa-box-open"></i> Products</a>
-        <a href="./umine.html" data-page="umine"><i class="fas fa-users"></i> Team</a>
-        <a href="./team.html" data-page="team"><i class="fas fa-user"></i> Profile</a>
+        <a href="./team.html" data-page="team"><i class="fas fa-users"></i> Team</a>
+        <a href="./profile.html" data-page="profile"><i class="fas fa-user"></i> Profile</a>
     </div>
 
     <script>
-        // The HTML for the alert should NOT be in the body of the main page.
-        // The JavaScript function `showAcornAlert` correctly builds the overlay/alert.
-        
         function showAcornAlert() {
             // Check if alert already exists to prevent duplication
             if (document.querySelector('.custom-alert-overlay')) {
@@ -425,7 +426,7 @@
             const overlay = document.createElement('div');
             overlay.className = 'custom-alert-overlay';
             
-            // Create alert box HTML. REMOVED DUPLICATE bottom-nav HTML from the innerHTML.
+            // Create alert box HTML
             overlay.innerHTML = `
                 <div class="alert-box">
                     <button class="close-btn" onclick="closeAlert()">&times;</button>
@@ -476,7 +477,6 @@
         function closeAlert() {
             const overlay = document.querySelector('.custom-alert-overlay');
             if (overlay) {
-                // Added a class for fade-out animation before removal (optional but good practice)
                 overlay.style.opacity = 0;
                 setTimeout(() => {
                     overlay.remove();
@@ -487,36 +487,37 @@
         function joinTelegram() {
             // Replace with your actual telegram link
             window.open('https://t.me/your_telegram_group', '_blank');
-            closeAlert(); // Close alert after joining
+            closeAlert();
         }
 
-        // --- Bottom Nav Active State Logic ---
+        // Bottom Nav Active State Logic
         document.addEventListener('DOMContentLoaded', function() {
             // Get current page filename
-            const pathParts = window.location.pathname.split('/');
-            let currentPage = pathParts.pop() || 'product.html'; // Default to 'product.html' if on root
+            const currentPath = window.location.pathname;
+            const currentPage = currentPath.split('/').pop() || 'product.html';
             
-            // Handle cases where the path might end with a slash or be on root
-            if (currentPage === '') {
-                currentPage = pathParts.pop() || 'product.html';
-            }
-
             // Remove active class from all nav items
             const navItems = document.querySelectorAll('.bottom-nav a');
             navItems.forEach(item => item.classList.remove('active'));
             
             // Add active class to current page
-            // Use the full href to find the link
-            const activeNav = document.querySelector(`.bottom-nav a[href="${currentPage}"]`);
+            let activeNav = null;
+            navItems.forEach(item => {
+                const href = item.getAttribute('href');
+                if (href && (href.includes(currentPage) || (currentPage === '' && href.includes('product.html')))) {
+                    activeNav = item;
+                }
+            });
+            
             if (activeNav) {
                 activeNav.classList.add('active');
             } else {
-                // Fallback to highlight a default or first item if no match
-                document.querySelector('.bottom-nav a').classList.add('active');
+                // Fallback to first item
+                navItems[0].classList.add('active');
             }
 
-             // Auto-show alert when page loads
-            setTimeout(showAcornAlert, 1500); // Show alert 1.5 seconds after page loads
+            // Auto-show alert when page loads
+            setTimeout(showAcornAlert, 1500);
         });
 
         // Close alert when clicking outside
@@ -535,4 +536,3 @@
     </script>
 </body>
 </html>
-
