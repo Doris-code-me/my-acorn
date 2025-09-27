@@ -109,8 +109,6 @@
       background: linear-gradient(135deg, #f44336, #da190b);
     }
 
-
-
     body {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
@@ -196,8 +194,38 @@
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
     }
 
-    .plan-card h3 {
+    /* Plan Header with Acorn Icon */
+    .plan-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       margin-bottom: 10px;
+    }
+
+    .acorn-icon-small {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(45deg, #8B4513, #D2691E);
+      border-radius: 50% 50% 50% 0;
+      position: relative;
+      transform: rotate(-45deg);
+      flex-shrink: 0;
+    }
+
+    .acorn-icon-small::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 12px;
+      background: #228B22;
+      border-radius: 50%;
+    }
+
+    .plan-card h3 {
+      margin: 0;
       font-size: 18px;
       font-weight: 600;
     }
@@ -259,6 +287,9 @@
       transition: all 0.3s ease;
       padding: 5px;
       border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .bottom-nav i {
@@ -318,66 +349,6 @@
         font-size: 18px;
       }
     }
-    .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: linear-gradient(135deg, #ffffff, #f8f9fa);
-  display: flex;
-  justify-content: space-around;
-  padding: 12px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-}
-
-.bottom-nav a {
-  text-align: center;
-  text-decoration: none;
-  color: #666;
-  font-size: 13px;
-  transition: all 0.3s ease;
-  padding: 5px;
-  border-radius: 8px;
-}
-
-.bottom-nav i {
-  display: block;
-  font-size: 20px;
-  margin-bottom: 3px;
-  transition: all 0.3s ease;
-}
-
-.bottom-nav a.active {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: bold;
-}
-
-.bottom-nav a.active i {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.bottom-nav a:hover {
-  transform: translateY(-2px);
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-  .bottom-nav a {
-    font-size: 12px;
-  }
-
-  .bottom-nav i {
-    font-size: 18px;
-  }
-}
   </style>
 </head>
 <body>
@@ -408,76 +379,109 @@
   <!-- Investment Plans -->
   <div class="plans">
     <div class="plan-card">
-      <h3>Acorn 1</h3>
+      <div class="plan-header">
+        <div class="acorn-icon-small"></div>
+        <h3>Acorn 1</h3>
+      </div>
       <button class="join-btn" onclick="purchasePlan('Acorn 1', 3000, 750)">Join Now</button>
       <div class="plan-details">
-        <div><strong>Invest:</strong><br>3k get daily</div>
+        <div><strong>Invest:</strong><br>3000 get daily</div>
         <div><strong>Income:</strong><br>₦750</div>
       </div>
     </div>
 
     <div class="plan-card">
-      <h3>Acorn 2</h3>
+      <div class="plan-header">
+        <div class="acorn-icon-small"></div>
+        <h3>Acorn 2</h3>
+      </div>
       <button class="join-btn" onclick="purchasePlan('Acorn 2', 6000, 1500)">Join Now</button>
       <div class="plan-details">
-        <div><strong>Invest:</strong><br>6k Get daily</div>
+        <div><strong>Invest:</strong><br>6000 Get daily</div>
         <div><strong>Income:</strong><br>₦1500</div>
       </div>
     </div>
 
     <div class="plan-card">
-      <h3>Acorn 3</h3>
+      <div class="plan-header">
+        <div class="acorn-icon-small"></div>
+        <h3>Acorn 3</h3>
+      </div>
       <button class="join-btn" onclick="purchasePlan('Acorn 3', 10000, 2500)">Join Now</button>
       <div class="plan-details">
-        <div><strong>Invest:</strong><br>10k Get daily</div>
+        <div><strong>Invest:</strong><br>10,000 Get daily</div>
         <div><strong>Income:</strong><br>₦2500</div>
       </div>
     </div>
-       <div class="plan-card">
-      <h3>Acorn 4</h3>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="acorn-icon-small"></div>
+        <h3>Acorn 4</h3>
+      </div>
       <button class="join-btn" onclick="purchasePlan('Acorn 4', 20000, 5000)">Join Now</button>
       <div class="plan-details">
-        <div><strong>Invest:</strong><br>20k Get daily</div>
+        <div><strong>Invest:</strong><br>20,000 Get daily</div>
         <div><strong>Income:</strong><br>₦5000</div>
       </div>
     </div>
-       <div class="plan-card">
-      <h3>Acorn 5</h3>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="acorn-icon-small"></div>
+        <h3>Acorn 5</h3>
+      </div>
       <button class="join-btn" onclick="purchasePlan('Acorn 5', 30000, 7500)">Join Now</button>
       <div class="plan-details">
-        <div><strong>Invest:</strong><br>30k Get daily</div>
+        <div><strong>Invest:</strong><br>30,000 Get daily</div>
         <div><strong>Income:</strong><br>₦7500</div>
       </div>
     </div>
-       <div class="plan-card">
-      <h3>Acorn 6</h3>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="acorn-icon-small"></div>
+        <h3>Acorn 6</h3>
+      </div>
       <button class="join-btn" onclick="purchasePlan('Acorn 6', 70000, 17500)">Join Now</button>
       <div class="plan-details">
-        <div><strong>Invest:</strong><br>70k Get daily</div>
+        <div><strong>Invest:</strong><br>70,000 Get daily</div>
         <div><strong>Income:</strong><br>₦17500</div>
       </div>
     </div>
-       <div class="plan-card">
-      <h3>Acorn 7</h3>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="acorn-icon-small"></div>
+        <h3>Acorn 7</h3>
+      </div>
       <button class="join-btn" onclick="purchasePlan('Acorn 7', 100000, 25000)">Join Now</button>
       <div class="plan-details">
-        <div><strong>Invest:</strong><br>100k Get daily</div>
+        <div><strong>Invest:</strong><br>100,000 Get daily</div>
         <div><strong>Income:</strong><br>₦25000</div>
       </div>
-    </div> 
-         <div class="plan-card">
-      <h3>Acorn 8</h3>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="acorn-icon-small"></div>
+        <h3>Acorn 8</h3>
+      </div>
       <button class="join-btn" onclick="purchasePlan('Acorn 8', 200000, 50000)">Join Now</button>
       <div class="plan-details">
-        <div><strong>Invest:</strong><br>200k Get daily</div>
+        <div><strong>Invest:</strong><br>200,000 Get daily</div>
         <div><strong>Income:</strong><br>₦50000</div>
       </div>
     </div>
-        <div class="plan-card">
-      <h3>Acorn 9</h3>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="acorn-icon-small"></div>
+        <h3>Acorn 9</h3>
+      </div>
       <button class="join-btn" onclick="purchasePlan('Acorn 9', 300000, 75000)">Join Now</button>
       <div class="plan-details">
-        <div><strong>Invest:</strong><br>300k Get daily</div>
+        <div><strong>Invest:</strong><br>300,000 Get daily</div>
         <div><strong>Income:</strong><br>₦75000</div>
       </div>
     </div>
@@ -499,7 +503,24 @@
   <div id="messageDisplay" class="message"></div>
 
   <!-- Bottom Navigation -->
-  
+  <div class="bottom-nav">
+    <a href="home.html">
+      <i class="fa-solid fa-house"></i>
+      Home
+    </a>
+    <a href="product.html">
+      <i class="fa-solid fa-box"></i>
+      Product
+    </a>
+    <a href="team.html">
+      <i class="fa-solid fa-users"></i>
+      Team
+    </a>
+    <a href="profile.html">
+      <i class="fa-solid fa-user"></i>
+      Profile
+    </a>
+  </div>
 
   <script>
     // User data (in a real app, this would come from your backend/database)
@@ -635,49 +656,22 @@
 
     // Initialize the display
     updateBalanceDisplay();
+
+    // JavaScript to highlight active page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get current page filename
+      const currentPage = window.location.pathname.split('/').pop();
+      
+      // Remove active class from all nav items
+      const navItems = document.querySelectorAll('.bottom-nav a');
+      navItems.forEach(item => item.classList.remove('active'));
+      
+      // Add active class to current page
+      const activeNav = document.querySelector(`.bottom-nav a[href="${currentPage}"]`);
+      if (activeNav) {
+        activeNav.classList.add('active');
+      }
+    });
   </script>
-   <!-- Bottom Navigation -->
-<div class="bottom-nav">
-  <a href="home.html">
-    <i class="fa-solid fa-house"></i>
-    Home
-  </a>
-  <a href="product.html">
-    <i class="fa-solid fa-box"></i>
-    Product
-  </a>
-  <a href="team.html">
-    <i class="fa-solid fa-users"></i>
-    Team
-  </a>
-  <a href="profile.html">
-    <i class="fa-solid fa-user"></i>
-    Profile
-  </a>
-</div>
-
-
-
-<!-- JavaScript to highlight active page -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Get current page filename
-  const currentPage = window.location.pathname.split('/').pop();
-  
-  // Remove active class from all nav items
-  const navItems = document.querySelectorAll('.bottom-nav a');
-  navItems.forEach(item => item.classList.remove('active'));
-  
-  // Add active class to current page
-  const activeNav = document.querySelector(`.bottom-nav a[href="${currentPage}"]`);
-  if (activeNav) {
-    activeNav.classList.add('active');
-  }
-});
-</script>
 </body>
 </html>
-
-
-
-
