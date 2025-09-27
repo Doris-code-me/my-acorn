@@ -3,278 +3,381 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Acorn App</title>
+  <title>Acorn - Welcome Back</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f8ff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .container {
-      width: 320px;
-      padding: 20px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f7fa;
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 360px;
+      background: white;
+      border-radius: 20px;
+      padding: 40px 30px;
       text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
-    .logo {
-      margin-bottom: 15px;
+
+    .logo-container {
+      margin-bottom: 30px;
     }
-    .logo img {
+
+    .logo-circle {
       width: 100px;
-      height: auto;
-      max-width: 120px;
-      border-radius: 8px;
+      height: 100px;
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 8px 20px rgba(30, 58, 138, 0.3);
+      position: relative;
     }
-    /* Fallback acorn icon if image fails to load */
+
     .acorn-icon {
-      width: 80px;
-      height: 80px;
+      width: 50px;
+      height: 50px;
       background: linear-gradient(45deg, #8B4513, #D2691E);
       border-radius: 50% 50% 50% 0;
       position: relative;
       transform: rotate(-45deg);
-      margin: 0 auto 15px;
-      display: none; /* Hidden by default, shown if image fails */
     }
+
     .acorn-icon::before {
       content: '';
       position: absolute;
-      top: -12px;
+      top: -8px;
       left: 50%;
       transform: translateX(-50%);
-      width: 20px;
-      height: 20px;
-      background: #228B22;
+      width: 12px;
+      height: 12px;
+      background: #22c55e;
       border-radius: 50%;
     }
-    .acorn-icon::after {
-      content: '🌰';
+
+    .brand-text {
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      letter-spacing: 1px;
+    }
+
+    .welcome-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #1e40af;
+      margin-bottom: 8px;
+    }
+
+    .welcome-subtitle {
+      font-size: 16px;
+      color: #6b7280;
+      margin-bottom: 40px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-label {
+      font-size: 16px;
+      color: #374151;
+      font-weight: 500;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .input-container {
+      position: relative;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 56px;
+      padding: 16px 50px 16px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 16px;
+      color: #374151;
+      background: #f9fafb;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .form-input::placeholder {
+      color: #9ca3af;
+    }
+
+    .form-input:focus {
+      border-color: #3b82f6;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .input-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      font-size: 18px;
+    }
+
+    .login-btn {
+      width: 100%;
+      height: 56px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .divider {
+      margin: 30px 0;
+      color: #9ca3af;
+      font-size: 16px;
+      position: relative;
+    }
+
+    .divider::before {
+      content: '';
       position: absolute;
       top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(45deg);
-      font-size: 24px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e5e7eb;
     }
-    h2 {
-      color: #1d3a6e;
-    }
-    .form-group {
-      margin: 10px 0;
-    }
-    input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      outline: none;
-      box-sizing: border-box;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      margin-top: 10px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    #loginBtn {
-      background: linear-gradient(to right, #1d3a6e, #2962ff);
-      color: white;
-    }
-    .outline {
-      border: 1px solid #2962ff;
+
+    .divider span {
       background: white;
-      color: #2962ff;
+      padding: 0 20px;
+      position: relative;
     }
-    .or {
-      margin: 15px 0;
-      color: #555;
+
+    .create-account-btn {
+      width: 100%;
+      height: 56px;
+      background: white;
+      color: #3b82f6;
+      border: 2px solid #3b82f6;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
-    #message {
-      margin-top: 10px;
-      color: red;
+
+    .create-account-btn:hover {
+      background: #3b82f6;
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .message {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 8px;
       font-size: 14px;
-    }
-    /* Dashboard styling */
-    #dashboard {
       display: none;
+    }
+
+    .message.success {
+      background: #dcfce7;
+      color: #16a34a;
+      border: 1px solid #bbf7d0;
+    }
+
+    .message.error {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 480px) {
+      body {
+        padding: 20px 15px;
+      }
+
+      .login-container {
+        padding: 30px 20px;
+      }
+
+      .welcome-title {
+        font-size: 24px;
+      }
+
+      .form-input {
+        height: 52px;
+        font-size: 16px;
+      }
+
+      .login-btn, .create-account-btn {
+        height: 52px;
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container" id="auth-container">
-    <div class="logo">
-      <!-- Option 1: Use a placeholder image service -->
-      <img src="https://via.placeholder.com/120x144/8B4513/FFFFFF?text=🌰" alt="Acorn Logo" id="logo-img" onerror="showFallbackIcon()">
-      
-      <!-- Fallback acorn icon -->
-      <div class="acorn-icon" id="fallback-icon"></div>
-    </div>
-    <h2>Welcome Back</h2>
-    <p>Sign in to continue</p>
-
-    <div class="form-group">
-      <input type="text" id="mobile" placeholder="Enter your mobile number">
-    </div>
-    <div class="form-group">
-      <input type="password" id="password" placeholder="Enter your password">
+  <div class="login-container">
+    <div class="logo-container">
+      <div class="logo-circle">
+        <div class="acorn-icon"></div>
+        <div class="brand-text">ACORN</div>
+      </div>
     </div>
 
-    <button id="loginBtn">Login</button>
-    <p class="or">OR</p>
-    <button id="signupBtn" class="outline">Create New Account</button>
-    
-    <p id="message"></p>
-  </div>
+    <h1 class="welcome-title">Welcome Back</h1>
+    <p class="welcome-subtitle">Sign in to continue</p>
 
-  <div class="container" id="dashboard">
-    <h2>Welcome to Acorn Dashboard</h2>
-    <button id="logoutBtn">Logout</button>
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label">Mobile Number</label>
+        <div class="input-container">
+          <input type="tel" class="form-input" id="mobileNumber" placeholder="Enter your mobile number" required>
+          <i class="fas fa-phone input-icon"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-container">
+          <input type="password" class="form-input" id="password" placeholder="Enter your password" required>
+          <i class="fas fa-lock input-icon"></i>
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <div class="divider">
+      <span>OR</span>
+    </div>
+
+    <button class="create-account-btn" onclick="createAccount()">Create New Account</button>
+
+    <div id="message" class="message"></div>
   </div>
 
   <script>
-    // Fallback function for when image fails to load
-    function showFallbackIcon() {
-      document.getElementById('logo-img').style.display = 'none';
-      document.getElementById('fallback-icon').style.display = 'block';
+    const loginForm = document.getElementById('loginForm');
+    const messageDiv = document.getElementById('message');
+
+    function showMessage(text, type = 'success') {
+      messageDiv.textContent = text;
+      messageDiv.className = `message ${type}`;
+      messageDiv.style.display = 'block';
+      
+      setTimeout(() => {
+        messageDiv.style.display = 'none';
+      }, 4000);
     }
 
-    // Note: Firebase configuration is commented out since you need to add your actual config
-    /*
-    // Import Firebase SDK (uncomment when you have your config)
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-    import { 
-      getAuth, 
-      signInWithEmailAndPassword, 
-      createUserWithEmailAndPassword, 
-      signOut,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-
-    // Replace with your Firebase project config
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT.appspot.com",
-      messagingSenderId: "SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    */
-
-    // Elements
-    const loginBtn = document.getElementById("loginBtn");
-    const signupBtn = document.getElementById("signupBtn");
-    const logoutBtn = document.getElementById("logoutBtn");
-    const message = document.getElementById("message");
-    const authContainer = document.getElementById("auth-container");
-    const dashboard = document.getElementById("dashboard");
-
-    // Temporary login without Firebase (for testing)
-    loginBtn.addEventListener("click", () => {
-      const mobile = document.getElementById("mobile").value;
-      const password = document.getElementById("password").value;
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
       
-      if (mobile && password) {
-        message.style.color = "green";
-        message.innerText = "Login successful!";
-        // Simulate successful login
+      const mobile = document.getElementById('mobileNumber').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!mobile || !password) {
+        showMessage('Please enter both mobile number and password', 'error');
+        return;
+      }
+
+      if (mobile.length < 10) {
+        showMessage('Please enter a valid mobile number', 'error');
+        return;
+      }
+
+      if (password.length < 6) {
+        showMessage('Password must be at least 6 characters long', 'error');
+        return;
+      }
+
+      // Simulate login process
+      const loginBtn = document.querySelector('.login-btn');
+      loginBtn.textContent = 'Logging in...';
+      loginBtn.disabled = true;
+
+      setTimeout(() => {
+        showMessage('Login successful! Welcome to Acorn', 'success');
+        
         setTimeout(() => {
-          authContainer.style.display = "none";
-          dashboard.style.display = "block";
-        }, 1000);
-      } else {
-        message.innerText = "Please enter mobile number and password";
+          console.log('Redirecting to dashboard...');
+          // Redirect to your main app/dashboard
+          // window.location.href = 'dashboard.html';
+        }, 1500);
+
+        loginBtn.textContent = 'Login';
+        loginBtn.disabled = false;
+      }, 2000);
+    });
+
+    function createAccount() {
+      const mobile = document.getElementById('mobileNumber').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!mobile || !password) {
+        showMessage('Please enter mobile number and password to create account', 'error');
+        return;
       }
-    });
 
-    // Temporary signup without Firebase (for testing)
-    signupBtn.addEventListener("click", () => {
-      const mobile = document.getElementById("mobile").value;
-      const password = document.getElementById("password").value;
-      
-      if (mobile && password) {
-        message.style.color = "green";
-        message.innerText = "Account created successfully!";
-      } else {
-        message.innerText = "Please enter mobile number and password";
+      if (mobile.length < 10) {
+        showMessage('Please enter a valid mobile number', 'error');
+        return;
       }
-    });
 
-    // Logout
-    logoutBtn.addEventListener("click", () => {
-      authContainer.style.display = "block";
-      dashboard.style.display = "none";
-      message.innerText = "";
-      document.getElementById("mobile").value = "";
-      document.getElementById("password").value = "";
-      alert("Successfully logged out!");
-    });
-
-    /* 
-    // Firebase authentication code (uncomment when you have your config)
-    
-    // Login
-    loginBtn.addEventListener("click", () => {
-      const mobile = document.getElementById("mobile").value;
-      const password = document.getElementById("password").value;
-      const email = mobile + "@acorn.com"; // using mobile as email
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          message.style.color = "green";
-          message.innerText = "Login successful!";
-        })
-        .catch((error) => {
-          message.innerText = error.message;
-        });
-    });
-
-    // Signup
-    signupBtn.addEventListener("click", () => {
-      const mobile = document.getElementById("mobile").value;
-      const password = document.getElementById("password").value;
-      const email = mobile + "@acorn.com";
-
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          message.style.color = "green";
-          message.innerText = "Account created successfully!";
-        })
-        .catch((error) => {
-          message.innerText = error.message;
-        });
-    });
-
-    // Logout
-    logoutBtn.addEventListener("click", () => {
-      signOut(auth).then(() => {
-        alert("Successfully logged out!");
-      });
-    });
-
-    // Auth state listener
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        authContainer.style.display = "none";
-        dashboard.style.display = "block";
-      } else {
-        authContainer.style.display = "block";
-        dashboard.style.display = "none";
+      if (password.length < 6) {
+        showMessage('Password must be at least 6 characters long', 'error');
+        return;
       }
+
+      showMessage('Account created successfully! You can now sign in.', 'success');
+    }
+
+    // Auto-focus on mobile number field
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('mobileNumber').focus();
     });
-    */
   </script>
 </body>
 </html>
