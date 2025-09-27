@@ -178,6 +178,9 @@
         .bottom-spacing {
             display: none;
         }
+        .menu-item a i {
+        margin-right: 8px; /* Adds space after the icon within the link */
+       }
     </style>
 </head>
 <body>
@@ -193,94 +196,94 @@
     </div>
 
     <div class="menu">
-        <div class="menu-item" onclick="handleNavigation('./vrecharge.html', event)">
-            <div class="menu-item-left">
-                <div class="icon-box blue"><i class="fa fa-credit-card"></i></div>
-                <a href="./vrecharge.html">Recharge</a>
-            </div>
-            <i class="fa fa-chevron-right"></i>
+    <div class="menu-item" onclick="handleNavigation('./vrecharge.html', event)">
+        <div class="menu-item-left">
+            <div class="icon-box blue"><i class="fa fa-credit-card"></i></div>
+            <a href="./vrecharge.html">Recharge</a>
         </div>
-
-        <div class="menu-item" onclick="handleNavigation('./withdrawl.html', event)">
-            <div class="menu-item-left">
-                <div class="icon-box green"><i class="fa fa-download"></i></div>
-                <a href="./withdrawl.html">Withdrawal</a>
-            </div>
-            <i class="fa fa-chevron-right"></i>
-        </div>
-
-        <div class="menu-item" onclick="handleNavigation('./transaction.html', event)">
-            <div class="menu-item-left">
-                <div class="icon-box purple"><i class="fa fa-chart-line"></i></div>
-                <a href="./transaction.html">Earnings</a>
-            </div>
-            <i class="fa fa-chevron-right"></i>
-        </div>
-
-        <div class="menu-item" onclick="handleNavigation('./products.html', event)">
-            <div class="menu-item-left">
-                <div class="icon-box orange"><i class="fa fa-box"></i></div>
-                <a href="./products.html">My Products</a>
-            </div>
-            <i class="fa fa-chevron-right"></i>
-        </div>
-
-        <div class="menu-item" onclick="handleNavigation('./recharge record.html', event)">
-            <div class="menu-item-left">
-                <div class="icon-box blue"><i class="fa fa-rotate-left"></i></div>
-                <a href="./recharge record.html">Recharge Records</a>
-            </div>
-            <i class="fa fa-chevron-right"></i>
-        </div>
-
-        <div class="menu-item" onclick="handleNavigation('./withdrawal-history.html', event)">
-            <div class="menu-item-left">
-                <div class="icon-box red"><i class="fa fa-minus"></i></div>
-                <a href="./withdrawal-history.html">Withdrawal Records</a>
-            </div>
-            <i class="fa fa-chevron-right"></i>
-        </div>
-
-        <div class="menu-item" onclick="handleNavigation('./umine.html', event)">
-            <div class="menu-item-left">
-                <div class="icon-box indigo"><i class="fa fa-user-plus"></i></div>
-                <a href="./umine.html">Team</a>
-            </div>
-            <i class="fa fa-chevron-right"></i>
-        </div>
-
-        <div class="menu-item" onclick="handleNavigation('#', event)">
-            <div class="menu-item-left">
-                <div class="icon-box gray"><i class="fa fa-landmark"></i></div>
-                <a href="#">Bank Account</a>
-            </div>
-            <i class="fa fa-chevron-right"></i>
-        </div>
-
-        <div class="menu-item" onclick="handleNavigation('./password.html', event)">
-            <div class="menu-item-left">
-                <div class="icon-box yellow"><i class="fa fa-lock"></i></div>
-                <a href="./password.html">Change Password</a>
-            </div>
-            <i class="fa fa-chevron-right"></i>
-        </div>
-
-        <div class="menu-item" onclick="window.open('https://t.me/yoursupportchannel', '_blank')">
-            <div class="menu-item-left">
-                <div class="icon-box cyan"><i class="fa-brands fa-telegram"></i></div>
-                <a href="#">Telegram Support</a>
-            </div>
-            <i class="fa fa-chevron-right"></i>
-        </div>
-
-        <div class="menu-item" onclick="handleNavigation('./log-out.html', event)">
-            <div class="menu-item-left">
-                <div class="icon-box red"><i class="fa fa-right-from-bracket"></i></div>
-                <a href="./log-out.html">Logout</a>
-            </div>
-            <i class="fa fa-chevron-right"></i>
-        </div>
+        <i class="fa fa-chevron-right"></i>
     </div>
+
+    <div class="menu-item" onclick="handleNavigation('./withdrawl.html', event)">
+        <div class="menu-item-left">
+            <div class="icon-box green"><i class="fa fa-download"></i></div>
+            <a href="./withdrawl.html">Withdrawal</a>
+        </div>
+        <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item" onclick="handleNavigation('./transaction.html', event)">
+        <div class="menu-item-left">
+            <div class="icon-box purple"><i class="fa fa-chart-line"></i></div>
+            <a href="./transaction.html">Earnings</a>
+        </div>
+        <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item" onclick="handleNavigation('./products.html', event)">
+        <div class="menu-item-left">
+            <div class="icon-box orange"><i class="fa fa-box"></i></div>
+            <a href="./products.html">My Products</a>
+        </div>
+        <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item" onclick="handleNavigation('./recharge record.html', event)">
+        <div class="menu-item-left">
+            <div class="icon-box blue"><i class="fa fa-rotate-left"></i></div>
+            <a href="./recharge record.html"><i class="fa fa-rotate-left"></i> Recharge Records</a>
+        </div>
+        <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item" onclick="handleNavigation('./withdrawal-history.html', event)">
+        <div class="menu-item-left">
+            <div class="icon-box red"><i class="fa fa-minus"></i></div>
+            <a href="./withdrawal-history.html"><i class="fa fa-minus"></i> Withdrawal Records</a>
+        </div>
+        <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item" onclick="handleNavigation('./umine.html', event)">
+        <div class="menu-item-left">
+            <div class="icon-box indigo"><i class="fa fa-user-plus"></i></div>
+            <a href="./umine.html"><i class="fa fa-user-plus"></i> Team</a>
+        </div>
+        <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item" onclick="handleNavigation('#', event)">
+        <div class="menu-item-left">
+            <div class="icon-box gray"><i class="fa fa-landmark"></i></div>
+            <a href="#"><i class="fa fa-landmark"></i> Bank Account</a>
+        </div>
+        <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item" onclick="handleNavigation('./password.html', event)">
+        <div class="menu-item-left">
+            <div class="icon-box yellow"><i class="fa fa-lock"></i></div>
+            <a href="./password.html"><i class="fa fa-lock"></i> Change Password</a>
+        </div>
+        <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item" onclick="window.open('https://t.me/yoursupportchannel', '_blank')">
+        <div class="menu-item-left">
+            <div class="icon-box cyan"><i class="fa-brands fa-telegram"></i></div>
+            <a href="#"><i class="fa-brands fa-telegram"></i> Telegram Support</a>
+        </div>
+        <i class="fa fa-chevron-right"></i>
+    </div>
+
+    <div class="menu-item" onclick="handleNavigation('./log-out.html', event)">
+        <div class="menu-item-left">
+            <div class="icon-box red"><i class="fa fa-right-from-bracket"></i></div>
+            <a href="./log-out.html"><i class="fa fa-right-from-bracket"></i> Logout</a>
+        </div>
+        <i class="fa fa-chevron-right"></i>
+    </div>
+</div>
 
     <div class="bottom-nav">
         <div class="bottom-nav-container">
@@ -294,5 +297,6 @@
    
 </body>
 </html>
+
 
 
